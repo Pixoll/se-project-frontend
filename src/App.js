@@ -11,7 +11,7 @@ function App() {
                 <Route path="/" element={<Container1 />} />
 
                 {/* Ruta para la vista de citas agendadas del paciente */}
-                <Route path="/paciente/citas" element={<ScheduledAppointments />} />
+                <Route path="/patients/:rut/appointments" element={<ScheduledAppointments />} />
             </Routes>
         </Router>
     );
