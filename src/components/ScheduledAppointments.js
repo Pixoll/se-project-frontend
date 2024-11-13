@@ -7,7 +7,6 @@ const ScheduledAppointments = () => {
     const [date, setDate] = useState(new Date());
     const [appointments, setAppointments] = useState([]);
 
-    // Simular las citas agendadas (estas deberían venir del backend)
     useEffect(() => {
         const fetchedAppointments = [
             { id: 1, date: new Date(2024, 10, 14, 10, 0), specialist: 'Dr. Smith' },
@@ -16,13 +15,11 @@ const ScheduledAppointments = () => {
         setAppointments(fetchedAppointments);
     }, []);
 
-    // Función para manejar la cancelación de citas (esto se debe trabajar con el backend)
     const handleCancelAppointment = (id) => {
         setAppointments(appointments.filter(appointment => appointment.id !== id));
         alert('Cita cancelada');
     };
 
-    // Función para mostrar las citas en una fecha específica
     const renderAppointments = () => {
         return appointments
             .filter(appointment => appointment.date.toDateString() === date.toDateString())
@@ -34,7 +31,6 @@ const ScheduledAppointments = () => {
             ));
     };
 
-    // Función para determinar si un día tiene citas
     const tileClassName = ({ date, view }) => {
         if (view === 'month') {
             const hasAppointment = appointments.some(appointment =>
@@ -59,6 +55,7 @@ const ScheduledAppointments = () => {
             <div className="appointments-list">
                 {renderAppointments()}
             </div>
+            <div className="footer-bar"></div>
         </div>
     );
 };
