@@ -1,0 +1,66 @@
+/* Fondo global para toda la página */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #d6e2ef; /* El color que quieres usar */
+    font-family: 'Codec Pro', sans-serif;
+}
+
+/* Contenedor principal de citas */
+.scheduled-appointments {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Título de citas */
+.welcome {
+    color: #336793;
+    font-size: 85px;
+    text-align: center;
+}
+
+/* Subtítulo de citas */
+.subWelcome {
+    color: #202020;
+    font-size: 45px;
+    text-align: center;
+}
+
+/* Contenedor del calendario */
+.calendar-container {
+    margin: 20px 0;
+}
+
+/* Lista de citas */
+.appointments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estilo para cada cita */
+.appointment p {
+    font-size: 18px;
+    color: #202020;
+}
+
+/* Estilo del botón */
+.ButtonOne {
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #336793;
+    font-size: 20px;
+    font-family: 'Migra', sans-serif;
+    text-transform: uppercase;
+    padding: 15px 25px;
+    margin-top: 10px;
+}
+
+.ButtonOne:hover {
+    background-color: #336793;
+    color: white;
+}
