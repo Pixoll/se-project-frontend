@@ -7,14 +7,14 @@
     width: 100%;
 }
 @font-face {
-    font-family: 'Codec Pro';       /* Nombre de la fuente que usarás en CSS */
-    src: url('../fonts/codec-pro/CodecPro-Regular.ttf') format('truetype'); /* Ruta al archivo */
+    font-family: 'Codec Pro';
+    src: url('../fonts/codec-pro/CodecPro-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 @font-face {
-    font-family: 'Migra';       /* Nombre de la fuente que usarás en CSS */
-    src: url('../fonts/Migra/MigraItalic-ExtraboldItalic.ttf') format('truetype'); /* Ruta al archivo */
+    font-family: 'Migra';
+    src: url('../fonts/Migra/MigraItalic-ExtraboldItalic.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }

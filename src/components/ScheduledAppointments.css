@@ -3,7 +3,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: #d6e2ef; /* El color que quieres usar */
+    background-color: #d6e2ef;
     font-family: 'Codec Pro', sans-serif;
 }
 
@@ -33,6 +33,29 @@ html, body {
 /* Contenedor del calendario */
 .calendar-container {
     margin: 20px 0;
+}
+
+/* Estilo de los dias con citas agendadas */
+.calendar-container .react-calendar {
+    border-radius: 15px;
+}
+
+/* Estilo de el dia seleccionado */
+.react-calendar__tile--active {
+    border-radius: 10%;
+    background-color: #44b9eb; /* Ajusta el color según tus necesidades */
+}
+
+/* Estilo de el dia actual */
+.react-calendar__tile--now {
+    border-radius: 10%;
+    background-color: #ffeb3b; /* Ajusta el color según tus necesidades */
+}
+
+/* Color de fondo para los dias con citas agendadas */
+.highlighted-day {
+    background-color: #66f2c1;
+    border-radius: 10%;
 }
 
 /* Lista de citas */

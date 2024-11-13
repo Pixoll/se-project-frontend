@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './ScheduledAppointments.css'; // Asegúrate de crear este archivo para los estilos específicos del componente
+import './ScheduledAppointments.css';
 
 const ScheduledAppointments = () => {
     const [date, setDate] = useState(new Date());
@@ -16,7 +16,7 @@ const ScheduledAppointments = () => {
         setAppointments(fetchedAppointments);
     }, []);
 
-    // Función para manejar la cancelación de citas
+    // Función para manejar la cancelación de citas (esto se debe trabajar con el backend)
     const handleCancelAppointment = (id) => {
         setAppointments(appointments.filter(appointment => appointment.id !== id));
         alert('Cita cancelada');
@@ -34,11 +34,26 @@ const ScheduledAppointments = () => {
             ));
     };
 
+    // Función para determinar si un día tiene citas
+    const tileClassName = ({ date, view }) => {
+        if (view === 'month') {
+            const hasAppointment = appointments.some(appointment =>
+                appointment.date.toDateString() === date.toDateString()
+            );
+            return hasAppointment ? 'highlighted-day' : null;
+        }
+        return null;
+    };
+
     return (
         <div className="scheduled-appointments">
             <h1 className="welcome">Tus Citas Agendadas</h1>
             <div className="calendar-container">
-                <Calendar onChange={setDate} value={date} />
+                <Calendar
+                    onChange={setDate}
+                    value={date}
+                    tileClassName={tileClassName}
+                />
             </div>
             <h2 className="subWelcome">Citas para el {date.toDateString()}</h2>
             <div className="appointments-list">

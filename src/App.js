@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Container1 from './components/Container1';  // Asegúrate que la ruta de Container1 sea correcta
+import Container1 from './components/Container1';
 import ScheduledAppointments from './components/ScheduledAppointments';  // Importa la vista de citas agendadas
 
 function App() {
