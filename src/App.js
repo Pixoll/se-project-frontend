@@ -1,25 +1,20 @@
-import "./App.css";
-function ButtonOne({text}) {
-    return(
-        <button className="ButtonOne">
-            <span className="text-button">{text}</span>
-        </button>
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Container1 from './components/Container1';
+import ScheduledAppointments from './components/ScheduledAppointments';  // Importa la vista de citas agendadas
+
+function App() {
+    return (
+        <Router>
+            <Routes>
+                {/* Ruta para la página principal */}
+                <Route path="/" element={<Container1 />} />
+
+                {/* Ruta para la vista de citas agendadas del paciente */}
+                <Route path="/patients/:rut/appointments" element={<ScheduledAppointments />} />
+            </Routes>
+        </Router>
     );
 }
 
-export default function Container1() {
-    return(
-        <div className="Container1">
-            <div className="Columna1_1">
-                <h1 className="welcome">Bienvenido</h1>
-                <h2 className="subWelcome">¿Listo para agendar tu cita medica?</h2>
-                <ButtonOne text="Ingresar Como Paciente"/>
-            </div>
-            <div className="Columna1_2">
-                <ButtonOne text="Ingresar como Funcionario"/>
-                <ButtonOne text="Ingresar como Especialista"/>
-            </div>
-        </div>
-    );
-    
-}
+export default App;

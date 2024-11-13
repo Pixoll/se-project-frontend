@@ -7,14 +7,14 @@
     width: 100%;
 }
 @font-face {
-    font-family: 'Codec Pro';       /* Nombre de la fuente que usarás en CSS */
-    src: url('fonts/codec-pro/CodecPro-Regular.ttf') format('truetype'); /* Ruta al archivo */
+    font-family: 'Codec Pro';
+    src: url('../fonts/codec-pro/CodecPro-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 @font-face {
-    font-family: 'Migra';       /* Nombre de la fuente que usarás en CSS */
-    src: url('fonts/Migra/MigraItalic-ExtraboldItalic.ttf') format('truetype'); /* Ruta al archivo */
+    font-family: 'Migra';
+    src: url('../fonts/Migra/MigraItalic-ExtraboldItalic.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -26,7 +26,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: end;
-    background-image: url(photos/imgColumna1_2.png);
+    background-image: url(../photos/imgColumna1_2.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
