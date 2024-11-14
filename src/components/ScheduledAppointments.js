@@ -6,6 +6,8 @@ import './ScheduledAppointments.css';
 const ScheduledAppointments = () => {
     const [date, setDate] = useState(new Date());
     const [appointments, setAppointments] = useState([]);
+    const [showForm, setShowForm] = useState(false);
+    const [newAppointment, setNewAppointment] = useState({ time: '', specialist: '' });
 
     useEffect(() => {
         const fetchedAppointments = [
@@ -18,6 +20,19 @@ const ScheduledAppointments = () => {
     const handleCancelAppointment = (id) => {
         setAppointments(appointments.filter(appointment => appointment.id !== id));
         alert('Cita cancelada');
+    };
+
+    const handleAddAppointment = () => {
+        const appointmentDate = new Date(date);
+        appointmentDate.setHours(parseInt(newAppointment.time.split(':')[0]), parseInt(newAppointment.time.split(':')[1]));
+
+        const newId = appointments.length ? Math.max(...appointments.map(app => app.id)) + 1 : 1;
+        const newApp = { id: newId, date: appointmentDate, specialist: newAppointment.specialist };
+
+        setAppointments([...appointments, newApp]);
+        setShowForm(false);
+        setNewAppointment({ time: '', specialist: '' });
+        alert('Cita agendada');
     };
 
     const renderAppointments = () => {
@@ -41,6 +56,8 @@ const ScheduledAppointments = () => {
         return null;
     };
 
+    const hasAppointments = appointments.some(appointment => appointment.date.toDateString() === date.toDateString());
+
     return (
         <div className="scheduled-appointments">
             <h1 className="welcome">Tus Citas Agendadas</h1>
@@ -55,6 +72,32 @@ const ScheduledAppointments = () => {
             <div className="appointments-list">
                 {renderAppointments()}
             </div>
+            {!hasAppointments && (
+                <button className="ButtonOne" onClick={() => setShowForm(true)}>Agendar Cita</button>
+            )}
+            {showForm && (
+                <div className="appointment-form">
+                    <h3>Agendar Nueva Cita</h3>
+                    <label>
+                        Hora:
+                        <input
+                            type="time"
+                            value={newAppointment.time}
+                            onChange={(e) => setNewAppointment({ ...newAppointment, time: e.target.value })}
+                        />
+                    </label>
+                    <label>
+                        Especialista:
+                        <input
+                            type="text"
+                            value={newAppointment.specialist}
+                            onChange={(e) => setNewAppointment({ ...newAppointment, specialist: e.target.value })}
+                        />
+                    </label>
+                    <button className="ButtonOne" onClick={handleAddAppointment}>Confirmar Cita</button>
+                    <button className="ButtonOne" onClick={() => setShowForm(false)}>Cancelar</button>
+                </div>
+            )}
             <div className="footer-bar"></div>
         </div>
     );
