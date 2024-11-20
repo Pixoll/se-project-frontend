@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Migra';       /* Nombre de la fuente que usarás en CSS */
+    src: url('../fonts/Migra/MigraItalic-ExtraboldItalic.ttf') format('truetype'); /* Ruta al archivo */
+    font-weight: normal;
+    font-style: normal;
+  }
+.ButtonOne{
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #336793;
+    font-size: 20px;
+    font-family: Migra;
+    text-transform: uppercase;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin: 10px;
+}
+.ButtonOne:hover{
+    background-color: #336793;
+    color: white;
+}
