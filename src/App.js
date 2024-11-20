@@ -1,20 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Container1 from './components/Container1';
+import Container1 from './pages/container1';
 import ScheduledAppointments from './components/ScheduledAppointments';  // Importa la vista de citas agendadas
-
+import Funcionario from "./pages/funcionario";
+import Especialistas from "./pages/especialista";
 function App() {
     return (
-        <Router>
-            <Routes>
-                {/* Ruta para la página principal */}
-                <Route path="/" element={<Container1 />} />
-
-                {/* Ruta para la vista de citas agendadas del paciente */}
-                <Route path="/patients/:rut/appointments" element={<ScheduledAppointments />} />
-            </Routes>
-        </Router>
+      <Routes>
+        <Route path="/" element={<Container1 />} />
+        <Route path="/funcionario" element={<Funcionario />} />
+        <Route path="/especialistas" element={<Especialistas />} />
+        <Route path="/patients/:rut/appointments" element={<ScheduledAppointments />} />
+      </Routes>
     );
-}
+  }
 
 export default App;

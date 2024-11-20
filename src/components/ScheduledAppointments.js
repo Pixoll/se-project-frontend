@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './ScheduledAppointments.css';
+import '../styles/ScheduledAppointments.css';
 
 const ScheduledAppointments = () => {
     const [date, setDate] = useState(new Date());
