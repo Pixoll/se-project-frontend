@@ -1,0 +1,13 @@
+.ContainerLogin{
+    display: grid;
+    place-items: center;
+    background-color: whitesmoke;
+    grid-template-rows: 1fr 1fr;
+    height: 50%;
+    width: 45%;
+}
+.FormLogin{
+    display: grid;
+    place-items: center;
+    grid-template-rows: 1fr 1fr;
+}

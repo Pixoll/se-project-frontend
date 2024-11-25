@@ -11,11 +11,11 @@
     font-size: 20px;
     font-family: Migra;
     text-transform: uppercase;
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    margin: 10px;
+    padding-left: 20vh;
+    padding-right: 25vh;
+    padding-top: 30vh;
+    padding-bottom: 30vh;
+    margin: 10vh;
 }
 .ButtonOne:hover{
     background-color: #336793;

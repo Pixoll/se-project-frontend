@@ -4,6 +4,7 @@ import Container1 from './pages/container1';
 import ScheduledAppointments from './components/ScheduledAppointments';  // Importa la vista de citas agendadas
 import Funcionario from "./pages/funcionario";
 import Especialistas from "./pages/especialista";
+import LoginFunEsp from './pages/LoginFunEspe';
 function App() {
     return (
       <Routes>
@@ -11,7 +12,9 @@ function App() {
         <Route path="/funcionario" element={<Funcionario />} />
         <Route path="/especialistas" element={<Especialistas />} />
         <Route path="/patients/:rut/appointments" element={<ScheduledAppointments />} />
+        <Route path='/LoginFunEsp' element={<LoginFunEsp />}/>
       </Routes>
+        
     );
   }
 
