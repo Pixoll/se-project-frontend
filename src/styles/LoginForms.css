@@ -1,13 +1,57 @@
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('../fonts/codec-pro/CodecPro-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+.ContainerG{
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    background-color: #d6e2ef;
+}
+
 .ContainerLogin{
     display: grid;
     place-items: center;
-    background-color: whitesmoke;
+    background-color: #ffffff;
     grid-template-rows: 1fr 1fr;
-    height: 50%;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    border: 2px solid #5387a3;
+    border-radius: 15%;
+    height: 90%;
     width: 45%;
 }
+
 .FormLogin{
     display: grid;
     place-items: center;
     grid-template-rows: 1fr 1fr;
+}
+
+.FormLogin label{
+    padding-top: 15%;
+    font-size: 100%;
+    color: #336793;
+    font: 'Codec Pro';
+}
+
+.FormLogin input{
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    padding-inline: 50%;
+    border: 2px solid #5387a3;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.FormLogin input:hover{
+    background-color: #3368933b;
 }

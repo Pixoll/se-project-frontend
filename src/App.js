@@ -5,6 +5,7 @@ import ScheduledAppointments from './components/ScheduledAppointments';  // Impo
 import Funcionario from "./pages/funcionario";
 import Especialistas from "./pages/especialista";
 import LoginFunEsp from './pages/LoginFunEspe';
+import Browser from './pages/Browser';
 function App() {
     return (
       <Routes>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/especialistas" element={<Especialistas />} />
         <Route path="/patients/:rut/appointments" element={<ScheduledAppointments />} />
         <Route path='/LoginFunEsp' element={<LoginFunEsp />}/>
+        <Route path='/Browser' element={<Browser/>}/>
       </Routes>
         
     );

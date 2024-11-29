@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('../fonts/codec-pro/CodecPro-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.ContainerBrower{
+    padding-top: 20%;
+}
+.title{
+    font: 'Codec Pro';
+    font-size: 20px;
+}
+.FormBrowser input{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    place-items: center;
+
+}
