@@ -62,7 +62,7 @@ html, body {
 
 /* Color de fondo para los dias con citas agendadas */
 .highlighted-day {
-    background-color: #66f2c1;
+    background-color: #ffa223;
     border-radius: 10%;
 }
 
