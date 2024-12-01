@@ -19,14 +19,14 @@ const Funcionario = () => {
                 id: 1,
                 date: new Date(2024, 10, 14, 10, 0),
                 specialist: 'Dr. Smith',
-                patient: { name: 'Juan Pérez', id: '12345', details: 'Ficha médica' },
+                patient: { name: 'Juan Pérez', id: '12.345.679-K', details: 'Ficha médica' },
                 confirmed: false
             },
             {
                 id: 2,
                 date: new Date(2024, 10, 15, 12, 0),
                 specialist: 'Dr. Williams',
-                patient: { name: 'Ana Gómez', id: '54321', details: 'Ficha médica' },
+                patient: { name: 'Ana Gómez', id: '87.654.321-0', details: 'Ficha médica' },
                 confirmed: false
             }
         ];
@@ -141,7 +141,7 @@ const Funcionario = () => {
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <h3>Ficha del Paciente: {selectedAppointment.patient.name}</h3>
-                        <p>ID del paciente: {selectedAppointment.patient.id}</p>
+                        <p>RUT del paciente: {selectedAppointment.patient.id}</p>
                         <p>Detalles: {selectedAppointment.patient.details}</p>
                         <div className="button-container">
                             <button className="ButtonOne" onClick={closePatientModal}>Cerrar Ficha</button>
