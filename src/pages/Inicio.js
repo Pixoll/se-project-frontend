@@ -1,10 +1,8 @@
 import React from 'react';
 
 function Inicio() {
-  return( 
-  <h1>Inicio</h1>
+  return <h1>Informacion del doctor</h1>;
   
-  );
 }
 
 export default Inicio;

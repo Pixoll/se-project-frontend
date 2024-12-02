@@ -13,7 +13,7 @@ export default function Container1() {
       </div>
       <div className="columna2">
         <ButtonOne text="Ingresar como Funcionario" to="/funcionario" />
-        <ButtonOne text="Ingresar como Especialista" to="/especialista" />
+        <ButtonOne text="Ingresar como Especialista" to="/doctor" />
       </div>
     </div>
   );
