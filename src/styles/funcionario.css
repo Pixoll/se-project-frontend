@@ -1,0 +1,97 @@
+/* Barra Inferior (meramente estetico) */
+.footer-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 20px;
+    background-color: #336793;
+}
+
+/* Contenedor principal de la vista de funcionario */
+.funcionario-view {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.confirmed-day {
+    background-color: #66f2c1;
+    border-radius: 10%;
+}
+
+/* El fondo oscuro que cubre toda la pantalla */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* El contenedor del contenido del modal */
+.modal-content {
+    background-color: #d6e2ef; /* Color de fondo acorde con el fondo general */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 600px;  /* Aumenta el ancho máximo del modal */
+    width: 90%;
+    z-index: 1001;
+}
+
+/* Botones dentro del modal */
+.modal-content .button-container button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    border: 2px solid #336793; /* Borde azul consistente con la paleta */
+    background-color: transparent; /* Fondo transparente */
+    color: #336793; /* Texto en azul */
+    font-size: 16px;
+    font-family: 'Migra', sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo del botón cuando se pasa el ratón por encima */
+.modal-content button:hover {
+    background-color: #336793; /* Fondo azul fuerte al hacer hover */
+    color: white; /* Texto blanco en hover */
+}
+
+.modal-overlay .modal-content .calendar-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Ajusta el contenido del calendario */
+.modal-overlay .modal-content .react-calendar {
+    border-radius: 15px;
+}
+
+/* Estilo de los días con citas agendadas */
+.modal-overlay .modal-content .react-calendar__tile--now {
+    background-color: #ffeb3b;
+    color: #202020;
+}
+
+.modal-overlay .modal-content .react-calendar__tile--active {
+    background-color: #44b9eb;
+    color: white;
+}
+
+/* Ajuste general para los botones en la parte inferior */
+.modal-content .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}

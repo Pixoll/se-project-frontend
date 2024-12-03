@@ -48,6 +48,12 @@ const ScheduledAppointments = () => {
 
     const tileClassName = ({ date, view }) => {
         if (view === 'month') {
+            const hasConfirmedAppointment = appointments.some(appointment =>
+                appointment.date.toDateString() === date.toDateString() && appointment.confirmed
+            );
+            if (hasConfirmedAppointment) {
+                return 'confirmed-day';
+            }
             const hasAppointment = appointments.some(appointment =>
                 appointment.date.toDateString() === date.toDateString()
             );
