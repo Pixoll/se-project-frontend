@@ -1,7 +1,14 @@
 import React from 'react';
 
 function Inicio() {
-  return <h1>Informacion del doctor</h1>;
+  return (
+    <div>
+    <h1>Información del doctor</h1>
+      <p>Nombre</p>
+      <p>Especialidad</p>
+      <p>Contacto</p>
+      </div>
+);
   
 }
 

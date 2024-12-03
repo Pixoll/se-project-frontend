@@ -1,5 +1,5 @@
 import React from 'react';
-import ScheduledAppointments from '../components/ScheduledAppointments';
+import ScheduledAppointments from '../components/ScheduledAppointmentsDoctor';
 
 function Calendario() {
   return (
