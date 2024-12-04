@@ -19,6 +19,7 @@ export default function LoginForm({ type }: LoginFormProps) {
     const { login } = useAuth();
 
     const onLogin = (e: FormEvent) => {
+        console.log("submit");
         e.preventDefault();
 
         axios
@@ -27,7 +28,7 @@ export default function LoginForm({ type }: LoginFormProps) {
             })
             .then((response) => {
                 if (response.status >= 400) {
-                    console.error(response.data);
+                    console.error("login failed:", response.data);
                     return;
                 }
 
@@ -36,7 +37,9 @@ export default function LoginForm({ type }: LoginFormProps) {
                 onResetForm();
                 navigate("/");
             })
-            .catch(console.error);
+            .catch((error) => {
+                console.log("login failed:", error.response.data);
+            });
     };
 
     return (
@@ -45,6 +48,7 @@ export default function LoginForm({ type }: LoginFormProps) {
                 <form className="login-form" onSubmit={onLogin}>
                     <label htmlFor="rut">Rut</label>
                     <input
+                        type="text"
                         name="rut"
                         value={formState.rut}
                         onChange={onInputChange}
@@ -60,10 +64,10 @@ export default function LoginForm({ type }: LoginFormProps) {
                         placeholder="Contraseña"
                         required
                     />
+                    <button type="submit" className="nav-button">
+                        INICIAR SESIÓN
+                    </button>
                 </form>
-                <button type="submit" className="nav-button">
-                    INICIAR SESIÓN
-                </button>
             </div>
         </div>
     );
