@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 
 const apiUrl = "http://localhost:3000/api/v1";
 
-export default function useRequest(method, endpoint, payload) {
-    const [status, setStatus] = useState("loading");
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
-    const [controller, setController] = useState(null);
+export default function useRequest<T, M extends Method = "get">(
+    method: M,
+    endpoint: string,
+    ...[payload]: M & "get" | "delete" extends never ? [] : [payload: object]
+): FetchResult<T> {
+    const [status, setStatus] = useState<FetchStatus>("loading");
+    const [data, setData] = useState<T | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [controller, setController] = useState<AbortController | null>(null);
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -52,8 +56,29 @@ export default function useRequest(method, endpoint, payload) {
         case "loading":
             return { status, handleCancelRequest };
         case "success":
-            return { status, data };
+            return { status, data: data! };
         case "failed":
-            return { status, error };
+            return { status, error: error! };
     }
 }
+
+type FetchStatus = "loading" | "success" | "failed";
+
+type FetchInProgress = {
+    status: "loading";
+    handleCancelRequest: () => void;
+};
+
+type FetchSuccess<T> = {
+    status: "success";
+    data: T;
+};
+
+type FetchFailed = {
+    status: "failed";
+    error: string;
+};
+
+type FetchResult<T> = FetchInProgress | FetchSuccess<T> | FetchFailed;
+
+type Method = "get" | "post" | "put" | "patch" | "delete";

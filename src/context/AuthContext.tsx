@@ -1,21 +1,14 @@
-import { createContext, useCallback, useEffect, useReducer, } from "react";
+import { createContext, FunctionComponent, ReactNode, useCallback, useEffect, useReducer } from "react";
 
-/** @type {AuthState} */
-const initialState = {
+const initialState: AuthState = {
     isAuthenticated: false,
     type: null,
     token: null,
 };
 
-/** @type {React.Context<AuthContextType | undefined>} */
-export const AuthContext = createContext(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-/**
- * @param {AuthState} state
- * @param {AuthAction} action
- * @returns {AuthState}
- */
-const authReducer = (state, action) => {
+const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
         case "login":
             return {
@@ -35,15 +28,12 @@ const authReducer = (state, action) => {
     }
 };
 
-const AuthProvider = ({ children }) => {
-    // noinspection JSCheckFunctionSignatures
-    const [state, dispatch] = /** @type {[AuthState, React.Dispatch<AuthAction>]} */ (
-        useReducer(authReducer, initialState)
-    );
+const AuthProvider: FunctionComponent<AuthProviderProps> = ({ children }) => {
+    const [state, dispatch] = useReducer(authReducer, initialState);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        const type = localStorage.getItem("token-type");
+        const type = localStorage.getItem("token-type") as TokenType | null;
         if (token && type) {
             dispatch({
                 type: "login",
@@ -65,7 +55,7 @@ const AuthProvider = ({ children }) => {
         }
     }, [state.isAuthenticated, state.token, state.type]);
 
-    const login = useCallback((type, token) => {
+    const login = useCallback((type: TokenType, token: string) => {
         dispatch({
             type: "login",
             payload: {
@@ -91,3 +81,35 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
+
+export type TokenType = "patient" | "medic" | "admin";
+
+type AuthState = {
+    isAuthenticated: true;
+    type: TokenType;
+    token: string;
+} | {
+    isAuthenticated: false;
+    type: null;
+    token: null;
+};
+
+type AuthAction = {
+    type: "login";
+    payload: {
+        type: TokenType;
+        token: string;
+    };
+} | {
+    type: "logout";
+};
+
+type AuthContextType = {
+    state: AuthState;
+    login: (type: TokenType, token: string) => void;
+    logout: () => void;
+};
+
+type AuthProviderProps = {
+    children: ReactNode;
+};

@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/NavButton.css";
 
-export function NavButton({ text, to }) {
+type NavButtonProps = {
+    text: string;
+    to: string;
+};
+
+export function NavButton({ text, to }: NavButtonProps) {
     const navigate = useNavigate();
 
     const handleClick = () => {

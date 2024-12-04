@@ -1,11 +1,24 @@
 import { useEffect, useState } from "react";
-import Calendar from "react-calendar";
+import Calendar, { TileClassNameFunc } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/ScheduledAppointments.css";
 
+type Appointment = {
+    id: number;
+    date: Date;
+    specialist: string;
+    patient: {
+        name: string;
+        id: string;
+        details: string;
+    },
+    confirmed: boolean;
+}
+
+
 export default function ScheduledAppointments() {
     const [date, setDate] = useState(new Date());
-    const [appointments, setAppointments] = useState([]);
+    const [appointments, setAppointments] = useState<Appointment[]>([]);
 
     useEffect(() => {
         const fetchAppointments = async () => {
@@ -21,12 +34,12 @@ export default function ScheduledAppointments() {
         fetchAppointments();
     }, []);
 
-    const handleCancelAppointment = (id) => {
+    const handleCancelAppointment = (id: number) => {
         setAppointments(appointments.filter(appointment => appointment.id !== id));
         alert("Cita cancelada");
     };
 
-    const tileClassName = ({ date, view }) => {
+    const tileClassName: TileClassNameFunc = ({ date, view }) => {
         if (view === "month") {
             const hasConfirmedAppointment = appointments.some(appointment =>
                 appointment.date.toDateString() === date.toDateString() && appointment.confirmed
@@ -53,7 +66,7 @@ export default function ScheduledAppointments() {
         return slots;
     };
 
-    const getAppointmentForSlot = (slot) => {
+    const getAppointmentForSlot = (slot: string) => {
         const [startHour, startMinute] = slot.split("-")[0].split(":");
         const startDateTime = new Date(date);
         startDateTime.setHours(parseInt(startHour, 10), parseInt(startMinute, 10), 0, 0);
@@ -77,7 +90,7 @@ export default function ScheduledAppointments() {
             <div className="calendar-and-schedule">
                 <div className="calendar-container">
                     <Calendar
-                        onChange={setDate}
+                        onChange={(d) => setDate(d as Date)}
                         value={date}
                         tileClassName={tileClassName}
                     />

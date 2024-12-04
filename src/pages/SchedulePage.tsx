@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 export default function SchedulePage() {
     // Paso 1: Recuperar el estado del localStorage o usar el estado predeterminado
     const [buttonColors, setButtonColors] = useState(
-        JSON.parse(localStorage.getItem("buttonColors")) || [false, false, false, false, false]
+        JSON.parse(localStorage.getItem("buttonColors") ?? "[false, false, false, false, false]")
+        ?? [false, false, false, false, false]
     );
 
     // Paso 2: Función para manejar el clic de un botón
-    const handleClick = (index) => {
+    const handleClick = (index: number) => {
         const newColors = [...buttonColors];
         newColors[index] = !newColors[index]; // Alternar entre seleccionado y no seleccionado
         setButtonColors(newColors);

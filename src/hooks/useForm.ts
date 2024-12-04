@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
-export default function useForm(initialForm) {
+export default function useForm<T>(initialForm: T): UseForm<T> {
     const [formState, setFormState] = useState(initialForm);
 
-    const onInputChange = ({ target }) => {
+    const onInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = target;
         setFormState({
             ...formState,
@@ -21,3 +21,9 @@ export default function useForm(initialForm) {
         onResetForm,
     };
 }
+
+type UseForm<T> = {
+    formState: T;
+    onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    onResetForm: () => void;
+};

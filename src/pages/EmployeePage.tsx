@@ -1,19 +1,31 @@
 import { useEffect, useState } from "react";
-import Calendar from "react-calendar";
+import Calendar, { TileClassNameFunc } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/EmployeePage.css";
 
+type Appointment = {
+    id: number;
+    date: Date;
+    specialist: string;
+    patient: {
+        name: string;
+        id: string;
+        details: string;
+    },
+    confirmed: boolean;
+}
+
 export default function EmployeePage() {
-    const [date, setDate] = useState(new Date());
-    const [appointments, setAppointments] = useState([]);
-    const [selectedAppointment, setSelectedAppointment] = useState(null);
-    const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState(null);
-    const [newDate, setNewDate] = useState(new Date());
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
+    const [date, setDate] = useState<Date>(new Date());
+    const [appointments, setAppointments] = useState<Appointment[]>([]);
+    const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+    const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState<number | null>(null);
+    const [newDate, setNewDate] = useState<Date>(new Date());
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isPatientModalOpen, setIsPatientModalOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        const fetchedAppointments = [
+        const fetchedAppointments: Appointment[] = [
             {
                 id: 1,
                 date: new Date(2024, 10, 14, 10, 0),
@@ -32,12 +44,12 @@ export default function EmployeePage() {
         setAppointments(fetchedAppointments);
     }, []);
 
-    const handleCancelAppointment = (id) => {
+    const handleCancelAppointment = (id: number) => {
         setAppointments(appointments.filter(appointment => appointment.id !== id));
         alert("Cita cancelada");
     };
 
-    const handleRescheduleClick = (id) => {
+    const handleRescheduleClick = (id: number) => {
         setRescheduleAppointmentId(id);
         setIsModalOpen(true);
     };
@@ -51,14 +63,14 @@ export default function EmployeePage() {
         setIsModalOpen(false);
     };
 
-    const handleConfirmAppointment = (id) => {
+    const handleConfirmAppointment = (id: number) => {
         alert("Cita confirmada");
         setAppointments(appointments.map(appointment =>
             appointment.id === id ? { ...appointment, confirmed: true } : appointment
         ));
     };
 
-    const viewPatientDetails = (appointment) => {
+    const viewPatientDetails = (appointment: Appointment) => {
         setSelectedAppointment(appointment);
         setIsPatientModalOpen(true);
     };
@@ -93,7 +105,7 @@ export default function EmployeePage() {
             ));
     };
 
-    const tileClassName = ({ date, view }) => {
+    const tileClassName: TileClassNameFunc = ({ date, view }) => {
         if (view === "month") {
             const hasConfirmedAppointment = appointments.some(appointment =>
                 appointment.date.toDateString() === date.toDateString() && appointment.confirmed
@@ -118,7 +130,7 @@ export default function EmployeePage() {
             <h1 className="welcome">Agenda del Funcionario</h1>
             <div className="calendar-container">
                 <Calendar
-                    onChange={setDate}
+                    onChange={(d) => setDate(d as Date)}
                     value={date}
                     tileClassName={tileClassName}
                 />
@@ -135,7 +147,7 @@ export default function EmployeePage() {
                         <h3>Selecciona una nueva fecha para aplazar la cita</h3>
                         <div className="calendar-container">
                             <Calendar
-                                onChange={setNewDate}
+                                onChange={(d) => setNewDate(d as Date)}
                                 value={newDate}
                             />
                         </div>

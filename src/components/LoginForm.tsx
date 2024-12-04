@@ -1,14 +1,14 @@
 import "../styles/LoginForm.css"
+import { TokenType } from "../context/AuthContext";
 // import { useAuth } from "../hooks/useAuth";
 // import useRequest from "../hooks/useRequest";
 import useForm from "../hooks/useForm";
 
-/**
- * @param {{ type: import("../context/AuthContext").TokenType }} props
- * @returns {JSX.Element}
- * @constructor
- */
-export default function LoginForm({ type }) {
+type LoginFormProps = {
+    type: TokenType;
+};
+
+export default function LoginForm({ type }: LoginFormProps) {
     const { formState, onInputChange, onResetForm } = useForm({
         rut: "",
         password: "",
