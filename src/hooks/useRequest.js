@@ -2,22 +2,21 @@ import { useState, useEffect } from "react";
 
 const apiUrl = "http://localhost:3000/api/v1";
 
-/**
- * @template T
- * @param {string} endpoint
- * @returns {FetchResult<T>}
- */
-export default function useFetch(endpoint) {
-    const [status, setStatus] = /** @type {State<FetchStatus>} */ (useState("loading"));
-    const [data, setData] = /** @type {State<object | null>} */ (useState(null));
-    const [error, setError] = /** @type {State<string | null>} */ (useState(null));
-    const [controller, setController] = /** @type {State<AbortController | null>} */ (useState(null));
+export default function useRequest(method, endpoint, payload) {
+    const [status, setStatus] = useState("loading");
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const [controller, setController] = useState(null);
 
     useEffect(() => {
         const abortController = new AbortController();
         setController(abortController);
 
-        fetch(apiUrl + endpoint, { signal: abortController.signal })
+        fetch(apiUrl + endpoint, {
+            ...payload && { body: JSON.stringify(payload) },
+            method,
+            signal: abortController.signal,
+        })
             .then(async (response) => {
                 const json = await response.json();
                 if (response.status >= 400) {
@@ -58,39 +57,3 @@ export default function useFetch(endpoint) {
             return { status, error };
     }
 }
-
-/**
- * @typedef {"loading" | "success" | "failed"} FetchStatus
- */
-
-/**
- * @template T
- * @typedef {FetchInProgress | FetchSuccess<T> | FetchFailed} FetchResult
- */
-
-/**
- * @typedef {{
- *     status: "loading";
- *     handleCancelRequest: () => void;
- * }} FetchInProgress
- */
-
-/**
- * @template T
- * @typedef {{
- *     status: "success";
- *     data: T;
- * }} FetchSuccess
- */
-
-/**
- * @typedef {{
- *     status: "failed";
- *     error: string;
- * }} FetchFailed
- */
-
-/**
- * @template T
- * @typedef {[T, import("react").Dispatch<import("react").SetStateAction<T>>]} State
- */

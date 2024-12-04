@@ -8,7 +8,7 @@ export default function HomePage() {
                 <h1 className="welcome">Bienvenido</h1>
                 <h2 className="sub-welcome">¿Listo para agendar tu cita médica?</h2>
                 <NavButton text="Ingresar como Paciente" to="/patient/login"/>
-                <NavButton text="Ingresar como Paciente" to="/appointments"/>
+                {/*<NavButton text="Ingresar como Paciente" to="/appointments"/>*/}
             </div>
             <div className="home-page-col-2">
                 <NavButton text="Ingresar como Funcionario" to="/employee"/>

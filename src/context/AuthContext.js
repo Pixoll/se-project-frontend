@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useReducer, } from "react";
+import { createContext, useCallback, useEffect, useReducer, } from "react";
 
 /** @type {AuthState} */
 const initialState = {
@@ -35,9 +35,6 @@ const authReducer = (state, action) => {
     }
 };
 
-/**
- * @type {React.FC<AuthProviderProps>}
- */
 const AuthProvider = ({ children }) => {
     // noinspection JSCheckFunctionSignatures
     const [state, dispatch] = /** @type {[AuthState, React.Dispatch<AuthAction>]} */ (
@@ -68,22 +65,15 @@ const AuthProvider = ({ children }) => {
         }
     }, [state.isAuthenticated, state.token, state.type]);
 
-    const login = useCallback(
-        /**
-         * @param {TokenType} type
-         * @param {string} token
-         */
-        (type, token) => {
-            dispatch({
-                type: "login",
-                payload: {
-                    type,
-                    token,
-                },
-            });
-        },
-        []
-    );
+    const login = useCallback((type, token) => {
+        dispatch({
+            type: "login",
+            payload: {
+                type,
+                token,
+            },
+        });
+    }, []);
 
     const logout = useCallback(() => {
         localStorage.removeItem("token");
@@ -101,41 +91,3 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
-
-/**
- * @typedef {"patient" | "medic" | "admin"} TokenType
- */
-
-/**
- * @typedef {{
- *     isAuthenticated: boolean;
- *     type: TokenType | null;
- *     token: string | null;
- * }} AuthState
- */
-
-/**
- * @typedef {{
- *     type: "login";
- *     payload: {
- *         type: TokenType;
- *         token: string;
- *     };
- * } | {
- *     type: "logout";
- * }} AuthAction
- */
-
-/**
- * @typedef {{
- *     state: AuthState;
- *     login: (type: TokenType, token: string) => void;
- *     logout: () => void;
- * }} AuthContextType
- */
-
-/**
- * @typedef {{
- *     children: React.ReactNode;
- * }} AuthProviderProps
- */
