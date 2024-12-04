@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('../fonts/codec-pro/CodecPro-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.ContainerBrower{
+    padding-top: 20%;
+}
+.title{
+    font: 'Codec Pro';
+    font-size: 20px;
+}
+.FormBrowser{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: center;
+    margin: 0 auto;
+}
+.FormBrowser input{
+    padding: 0.5rem;
+    border: 2px solid #5387a3;
+}
+.ButtonBrowser{
+    padding: 0.5rem;
+    border: 2px solid #5387a3;
+    background-color: transparent;
+    color: #333;
+}
+.ButtonBrowser:hover{
+    background-color: #336793;
+    color: white;
+    cursor: pointer;
+}

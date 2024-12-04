@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './ScheduledAppointments.css';
+import '../styles/ScheduledAppointments.css';
 
 const ScheduledAppointments = () => {
     const [date, setDate] = useState(new Date());
@@ -28,6 +28,12 @@ const ScheduledAppointments = () => {
 
     const tileClassName = ({ date, view }) => {
         if (view === 'month') {
+            const hasConfirmedAppointment = appointments.some(appointment =>
+                appointment.date.toDateString() === date.toDateString() && appointment.confirmed
+            );
+            if (hasConfirmedAppointment) {
+                return 'confirmed-day';
+            }
             const hasAppointment = appointments.some(appointment =>
                 appointment.date.toDateString() === date.toDateString()
             );
