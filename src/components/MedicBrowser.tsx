@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/DoctorBrowser.css"
+import "../styles/MedicBrowser.css"
 import { useNavigate } from "react-router-dom";
 
 export function MedicBrowser() {

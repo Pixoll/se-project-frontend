@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Calendar, { TileClassNameFunc } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../styles/EmployeePage.css";
+import "../styles/AdminPage.css";
 
 type Appointment = {
     id: number;
@@ -15,7 +15,7 @@ type Appointment = {
     confirmed: boolean;
 }
 
-export default function EmployeePage() {
+export default function AdminPage() {
     const [date, setDate] = useState<Date>(new Date());
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
