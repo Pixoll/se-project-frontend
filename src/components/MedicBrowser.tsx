@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/DoctorBrowser.css"
 import { useNavigate } from "react-router-dom";
 
-export function DoctorBrowser() {
+export function MedicBrowser() {
     const [specialist, setSpecialist] = useState("");
     const [name, setName] = useState("");
     const navigate = useNavigate();

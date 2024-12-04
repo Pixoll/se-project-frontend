@@ -12,7 +12,7 @@ export default function HomePage() {
             </div>
             <div className="home-page-col-2">
                 <NavButton text="Ingresar como Funcionario" to="/employee"/>
-                <NavButton text="Ingresar como Especialista" to="/doctor"/>
+                <NavButton text="Ingresar como Especialista" to="/medic"/>
             </div>
         </div>
     );

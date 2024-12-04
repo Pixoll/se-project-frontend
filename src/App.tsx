@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import ScheduledAppointments from "./components/ScheduledAppointments";
 import AuthProvider from "./context/AuthContext";
-import BrowserPage from "./pages/BrowserPage";
+import MedicPage from "./pages/MedicPage";
 import CalendarPage from "./pages/CalendarPage";
-import DoctorHomePage from "./pages/DoctorHomePage";
-import DoctorLoginPage from "./pages/DoctorLoginPage";
+import MedicHomePage from "./pages/MedicHomePage";
+import MedicLoginPage from "./pages/MedicLoginPage";
 import EmployeePage from "./pages/EmployeePage";
 import HomePage from "./pages/HomePage";
 import PatientLoginPage from "./pages/PatientLoginPage";
@@ -16,13 +16,13 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/employee" element={<EmployeePage/>}/>
-                <Route path="/doctor" element={<DoctorHomePage/>}/>
+                <Route path="/medic" element={<MedicHomePage/>}/>
                 <Route path="/patient/appointments" element={<ScheduledAppointments/>}/>
                 <Route path="/patient/login" element={<PatientLoginPage/>}/>
-                <Route path="/doctor-browser" element={<BrowserPage/>}/>
-                <Route path="/doctor/login" element={<DoctorLoginPage/>}/>
-                <Route path="/doctor/calendar" element={<CalendarPage/>}/>
-                <Route path="/doctor/schedule" element={<SchedulePage/>}/>
+                <Route path="/medic-browser" element={<MedicPage/>}/>
+                <Route path="/medic/login" element={<MedicLoginPage/>}/>
+                <Route path="/medic/calendar" element={<CalendarPage/>}/>
+                <Route path="/medic/schedule" element={<SchedulePage/>}/>
             </Routes>
         </AuthProvider>
     );
