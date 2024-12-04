@@ -35,7 +35,7 @@ export default function LoginForm({ type }: LoginFormProps) {
                 const token = response.data.token as string;
                 login("patient", token);
                 onResetForm();
-                navigate("/patient/appointments");
+                navigate(`/${type}/appointments`);
             })
             .catch((error) => {
                 console.log("login failed:", error.response.data);
