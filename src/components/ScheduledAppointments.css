@@ -11,7 +11,7 @@ html, body {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 20px;
+    height: 40px;
     background-color: #336793;
 }
 
@@ -43,55 +43,111 @@ html, body {
     margin: 20px 0;
 }
 
-/* Estilo de los dias con citas agendadas */
+/* Estilo de los días con citas agendadas */
 .calendar-container .react-calendar {
     border-radius: 15px;
 }
 
-/* Estilo de el dia seleccionado */
+/* Estilo de el día seleccionado */
 .react-calendar__tile--active {
     border-radius: 10%;
-    background-color: #44b9eb; /* Ajusta el color según tus necesidades */
+    background-color: #44b9eb;
 }
 
-/* Estilo de el dia actual */
+/* Estilo de el día actual */
 .react-calendar__tile--now {
     border-radius: 10%;
-    background-color: #ffeb3b; /* Ajusta el color según tus necesidades */
+    background-color: #ffeb3b;
 }
 
-/* Color de fondo para los dias con citas agendadas */
+/* Color de fondo para los días con citas agendadas */
 .highlighted-day {
     background-color: #66f2c1;
     border-radius: 10%;
 }
 
-/* Lista de citas */
-.appointments-list {
+/* Contenedor del horario */
+.schedule-container {
+    width: 350px;
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+/* Lista de horarios */
+.time-slots {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Estilo de cada horario individual */
+.time-slot {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Encabezado de cada horario que indica el intervalo de tiempo */
+.time-slot-header {
+    font-weight: bold;
+    color: #336793;
+    margin-bottom: 5px;
+}
+
+/* Contenido del horario que incluye detalles de citas y el botón */
+.time-slot-content {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
 }
 
-/* Estilo para cada cita */
-.appointment p {
-    font-size: 18px;
+/* Estilo del botón cancelar dentro del horario */
+.time-slot-content .ButtonOne {
+    margin-top: 0;
+    background-color: transparent;
+    color: #336793;
+    border: 2px solid #336793;
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-family: 'Migra', sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+
+.time-slot-content .ButtonOne:hover {
+    background-color: #336793;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Contenedor para organizar el calendario y el horario horizontalmente */
+.calendar-and-schedule {
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+/* Detalles de una cita dentro de un horario */
+.appointment-details {
+    font-size: 14px;
     color: #202020;
 }
 
-/* Estilo del botón */
-.ButtonOne {
-    background-color: transparent;
-    color: #333;
-    border: 2px solid #336793;
-    font-size: 20px;
-    font-family: 'Migra', sans-serif;
-    text-transform: uppercase;
-    padding: 15px 25px;
-    margin-top: 10px;
-}
-
-.ButtonOne:hover {
-    background-color: #336793;
-    color: white;
+/* Estilo para indicar que no hay citas en un horario */
+.no-appointment {
+    font-size: 14px;
+    color: #999999;
 }

@@ -6,44 +6,24 @@ import './ScheduledAppointments.css';
 const ScheduledAppointments = () => {
     const [date, setDate] = useState(new Date());
     const [appointments, setAppointments] = useState([]);
-    const [showForm, setShowForm] = useState(false);
-    const [newAppointment, setNewAppointment] = useState({ time: '', specialist: '' });
 
     useEffect(() => {
-        const fetchedAppointments = [
-            { id: 1, date: new Date(2024, 10, 14, 10, 0), specialist: 'Dr. Smith' },
-            { id: 2, date: new Date(2024, 10, 15, 12, 0), specialist: 'Dr. Williams' }
-        ];
-        setAppointments(fetchedAppointments);
+        const fetchAppointments = async () => {
+            try {
+                const response = await fetch(''); // colocar url
+                const data = await response.json();
+                setAppointments(data);
+            } catch (error) {
+                console.error('Error al cargar citas:', error);
+            }
+        };
+    
+        fetchAppointments();
     }, []);
 
     const handleCancelAppointment = (id) => {
         setAppointments(appointments.filter(appointment => appointment.id !== id));
         alert('Cita cancelada');
-    };
-
-    const handleAddAppointment = () => {
-        const appointmentDate = new Date(date);
-        appointmentDate.setHours(parseInt(newAppointment.time.split(':')[0]), parseInt(newAppointment.time.split(':')[1]));
-
-        const newId = appointments.length ? Math.max(...appointments.map(app => app.id)) + 1 : 1;
-        const newApp = { id: newId, date: appointmentDate, specialist: newAppointment.specialist };
-
-        setAppointments([...appointments, newApp]);
-        setShowForm(false);
-        setNewAppointment({ time: '', specialist: '' });
-        alert('Cita agendada');
-    };
-
-    const renderAppointments = () => {
-        return appointments
-            .filter(appointment => appointment.date.toDateString() === date.toDateString())
-            .map(appointment => (
-                <div key={appointment.id} className="appointment">
-                    <p>Cita a las {appointment.date.getHours()}:00 con {appointment.specialist}</p>
-                    <button className="ButtonOne" onClick={() => handleCancelAppointment(appointment.id)}>Cancelar Cita</button>
-                </div>
-            ));
     };
 
     const tileClassName = ({ date, view }) => {
@@ -56,51 +36,61 @@ const ScheduledAppointments = () => {
         return null;
     };
 
-    const hasAppointments = appointments.some(appointment => appointment.date.toDateString() === date.toDateString());
+    const generateTimeSlots = () => {
+        const slots = [];
+        const start = 8;
+        const end = 22;
+        for (let hour = start; hour < end; hour++) {
+            slots.push(`${hour}:00 - ${hour}:30`);
+            slots.push(`${hour}:30 - ${hour + 1}:00`);
+        }
+        return slots;
+    };
 
+    const getAppointmentForSlot = (slot) => {
+        const [startHour, startMinute] = slot.split('-')[0].split(':');
+        const startDateTime = new Date(date);
+        startDateTime.setHours(parseInt(startHour, 10), parseInt(startMinute, 10), 0, 0);
+    
+        const appointment = appointments.find(app => app.date.getTime() === startDateTime.getTime());
+        return appointment ? (
+            <div className="appointment-details">
+                <p>Con: {appointment.specialist}</p>
+                <button className="ButtonOne" onClick={() => handleCancelAppointment(appointment.id)}>Cancelar Cita</button>
+            </div>
+        ) : (
+            <p className="no-appointment">Sin citas</p>
+        );
+    };
+    
     return (
         <div className="scheduled-appointments">
             <h1 className="welcome">Tus Citas Agendadas</h1>
-            <div className="calendar-container">
-                <Calendar
-                    onChange={setDate}
-                    value={date}
-                    tileClassName={tileClassName}
-                />
-            </div>
-            <h2 className="subWelcome">Citas para el {date.toDateString()}</h2>
-            <div className="appointments-list">
-                {renderAppointments()}
-            </div>
-            {!hasAppointments && (
-                <button className="ButtonOne" onClick={() => setShowForm(true)}>Agendar Cita</button>
-            )}
-            {showForm && (
-                <div className="appointment-form">
-                    <h3>Agendar Nueva Cita</h3>
-                    <label>
-                        Hora:
-                        <input
-                            type="time"
-                            value={newAppointment.time}
-                            onChange={(e) => setNewAppointment({ ...newAppointment, time: e.target.value })}
-                        />
-                    </label>
-                    <label>
-                        Especialista:
-                        <input
-                            type="text"
-                            value={newAppointment.specialist}
-                            onChange={(e) => setNewAppointment({ ...newAppointment, specialist: e.target.value })}
-                        />
-                    </label>
-                    <button className="ButtonOne" onClick={handleAddAppointment}>Confirmar Cita</button>
-                    <button className="ButtonOne" onClick={() => setShowForm(false)}>Cancelar</button>
+            <div className="calendar-and-schedule">
+                <div className="calendar-container">
+                    <Calendar
+                        onChange={setDate}
+                        value={date}
+                        tileClassName={tileClassName}
+                    />
                 </div>
-            )}
+                <div className="schedule-container">
+                    <h2 className="subWelcome">Horario</h2>
+                    <ul className="time-slots">
+                        {generateTimeSlots().map((slot, index) => (
+                            <li key={index} className="time-slot">
+                                <div className="time-slot-header">{slot}</div>
+                                <div className="time-slot-content">
+                                    {getAppointmentForSlot(slot)}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
             <div className="footer-bar"></div>
         </div>
-    );
+    );    
 };
 
 export default ScheduledAppointments;
