@@ -7,7 +7,7 @@ import DoctorHomePage from "./pages/DoctorHomePage";
 import DoctorLoginPage from "./pages/DoctorLoginPage";
 import EmployeePage from "./pages/EmployeePage";
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
+import PatientLoginPage from "./pages/PatientLoginPage";
 import SchedulePage from "./pages/SchedulePage";
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
                 <Route path="/employee" element={<EmployeePage/>}/>
                 <Route path="/doctor" element={<DoctorHomePage/>}/>
                 <Route path="/appointments" element={<ScheduledAppointments/>}/>
-                <Route path="/patient/login" element={<LoginPage/>}/>
+                <Route path="/patient/login" element={<PatientLoginPage/>}/>
                 <Route path="/doctor-browser" element={<BrowserPage/>}/>
                 <Route path="/doctor/login" element={<DoctorLoginPage/>}/>
                 <Route path="/doctor/calendar" element={<CalendarPage/>}/>
