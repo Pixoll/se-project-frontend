@@ -1,5 +1,9 @@
+import LoginForm from "../components/LoginForm";
+
 export default function MedicLoginPage() {
     return (
-        <h1>Inicio</h1>
+        <div>
+            <LoginForm type={"medic"} redirectTo={"home"}/>
+        </div>
     );
 }

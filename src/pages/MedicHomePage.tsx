@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function MedicHomePage() {
     return (
         <nav>
-            <Link to="/medic/login">Inicio</Link>
+            <Link to="/">Inicio</Link>
             |
             <Link to="/medic/calendar">Calendario</Link>
             |
