@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import '../styles/funcionario.css';
+import React, { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "../styles/funcionario.css";
 
 const Funcionario = () => {
     const [date, setDate] = useState(new Date());
@@ -18,15 +18,15 @@ const Funcionario = () => {
             {
                 id: 1,
                 date: new Date(2024, 10, 14, 10, 0),
-                specialist: 'Dr. Smith',
-                patient: { name: 'Juan Pérez', id: '12.345.679-K', details: 'Ficha médica' },
+                specialist: "Dr. Smith",
+                patient: { name: "Juan Pérez", id: "12.345.679-K", details: "Ficha médica" },
                 confirmed: false
             },
             {
                 id: 2,
                 date: new Date(2024, 10, 15, 12, 0),
-                specialist: 'Dr. Williams',
-                patient: { name: 'Ana Gómez', id: '87.654.321-0', details: 'Ficha médica' },
+                specialist: "Dr. Williams",
+                patient: { name: "Ana Gómez", id: "87.654.321-0", details: "Ficha médica" },
                 confirmed: false
             }
         ];
@@ -35,7 +35,7 @@ const Funcionario = () => {
 
     const handleCancelAppointment = (id) => {
         setAppointments(appointments.filter(appointment => appointment.id !== id));
-        alert('Cita cancelada');
+        alert("Cita cancelada");
     };
 
     const handleRescheduleClick = (id) => {
@@ -47,13 +47,13 @@ const Funcionario = () => {
         setAppointments(appointments.map(appointment =>
             appointment.id === rescheduleAppointmentId ? { ...appointment, date: newDate } : appointment
         ));
-        alert('Cita aplazada a ' + newDate.toDateString());
+        alert("Cita aplazada a " + newDate.toDateString());
         setRescheduleAppointmentId(null);
         setIsModalOpen(false); // Cerrar el modal después de confirmar
     };
 
     const handleConfirmAppointment = (id) => {
-        alert('Cita confirmada');
+        alert("Cita confirmada");
         setAppointments(appointments.map(appointment =>
             appointment.id === id ? { ...appointment, confirmed: true } : appointment
         ));
@@ -85,17 +85,17 @@ const Funcionario = () => {
     };
 
     const tileClassName = ({ date, view }) => {
-        if (view === 'month') {
+        if (view === "month") {
             const hasConfirmedAppointment = appointments.some(appointment =>
                 appointment.date.toDateString() === date.toDateString() && appointment.confirmed
             );
             if (hasConfirmedAppointment) {
-                return 'confirmed-day';
+                return "confirmed-day";
             }
             const hasAppointment = appointments.some(appointment =>
                 appointment.date.toDateString() === date.toDateString()
             );
-            return hasAppointment ? 'highlighted-day' : null;
+            return hasAppointment ? "highlighted-day" : null;
         }
         return null;
     };

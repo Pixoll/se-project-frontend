@@ -1,8 +1,8 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
-import Inicio from './Inicio';
-import Calendario from './Calendario';
-import Horario from './Horario';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from "react-router-dom";
+import Inicio from "./Inicio";
+import Calendario from "./Calendario";
+import Horario from "./Horario";
 
 
 function especialista() {

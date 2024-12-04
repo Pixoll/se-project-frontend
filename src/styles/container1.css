@@ -7,14 +7,14 @@
     width: 100%;
 }
 @font-face {
-    font-family: 'Codec Pro';
-    src: url('../fonts/codec-pro/CodecPro-Regular.ttf') format('truetype');
+    font-family: "Codec Pro";
+    src: url("../fonts/codec-pro/CodecPro-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
   }
 @font-face {
-    font-family: 'Migra';
-    src: url('../fonts/Migra/MigraItalic-ExtraboldItalic.ttf') format('truetype');
+    font-family: "Migra";
+    src: url("../fonts/Migra/MigraItalic-ExtraboldItalic.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
   }
@@ -35,12 +35,12 @@
     color: #336793;
     font-size: 85px;
     text-align: center;
-    font-family: 'Codec Pro';
+    font-family: "Codec Pro";
 }
 
 .subWelcome{
     color: #202020;
     font-size: 45px;
     text-align: center;
-    font-family: 'Codec Pro';
+    font-family: "Codec Pro";
 }

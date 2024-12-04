@@ -55,7 +55,7 @@
     background-color: transparent; /* Fondo transparente */
     color: #336793; /* Texto en azul */
     font-size: 16px;
-    font-family: 'Migra', sans-serif;
+    font-family: "Migra", sans-serif;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;

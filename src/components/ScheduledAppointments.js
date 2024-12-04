@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import '../styles/ScheduledAppointments.css';
+import React, { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "../styles/ScheduledAppointments.css";
 
 const ScheduledAppointments = () => {
     const [date, setDate] = useState(new Date());
@@ -10,11 +10,11 @@ const ScheduledAppointments = () => {
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
-                const response = await fetch(''); // colocar url
+                const response = await fetch(""); // colocar url
                 const data = await response.json();
                 setAppointments(data);
             } catch (error) {
-                console.error('Error al cargar citas:', error);
+                console.error("Error al cargar citas:", error);
             }
         };
     
@@ -23,21 +23,21 @@ const ScheduledAppointments = () => {
 
     const handleCancelAppointment = (id) => {
         setAppointments(appointments.filter(appointment => appointment.id !== id));
-        alert('Cita cancelada');
+        alert("Cita cancelada");
     };
 
     const tileClassName = ({ date, view }) => {
-        if (view === 'month') {
+        if (view === "month") {
             const hasConfirmedAppointment = appointments.some(appointment =>
                 appointment.date.toDateString() === date.toDateString() && appointment.confirmed
             );
             if (hasConfirmedAppointment) {
-                return 'confirmed-day';
+                return "confirmed-day";
             }
             const hasAppointment = appointments.some(appointment =>
                 appointment.date.toDateString() === date.toDateString()
             );
-            return hasAppointment ? 'highlighted-day' : null;
+            return hasAppointment ? "highlighted-day" : null;
         }
         return null;
     };
@@ -54,7 +54,7 @@ const ScheduledAppointments = () => {
     };
 
     const getAppointmentForSlot = (slot) => {
-        const [startHour, startMinute] = slot.split('-')[0].split(':');
+        const [startHour, startMinute] = slot.split("-")[0].split(":");
         const startDateTime = new Date(date);
         startDateTime.setHours(parseInt(startHour, 10), parseInt(startMinute, 10), 0, 0);
     

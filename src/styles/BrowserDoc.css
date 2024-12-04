@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Codec Pro';
-    src: url('../fonts/codec-pro/CodecPro-Regular.ttf') format('truetype');
+    font-family: "Codec Pro";
+    src: url("../fonts/codec-pro/CodecPro-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
@@ -10,7 +10,7 @@
     padding-top: 20%;
 }
 .title{
-    font: 'Codec Pro';
+    font: "Codec Pro";
     font-size: 20px;
 }
 .FormBrowser{
