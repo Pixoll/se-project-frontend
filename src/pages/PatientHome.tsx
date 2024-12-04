@@ -16,7 +16,7 @@ type Appointment = {
 }
 
 
-export default function ScheduledAppointments() {
+export default function PatientHome() {
     const [date, setDate] = useState(new Date());
     const [appointments, setAppointments] = useState<Appointment[]>([]);
 

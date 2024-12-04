@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import ScheduledAppointments from "./components/ScheduledAppointments";
+import PatientHome from "./pages/PatientHome";
 import AuthProvider from "./context/AuthContext";
 import MedicPage from "./pages/MedicPage";
 import CalendarPage from "./pages/CalendarPage";
@@ -18,7 +18,7 @@ export default function App() {
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/admin/home" element={<AdminPage/>}/>
                 <Route path="/admin/login" element={<AdminLoginPage/>}/>
-                <Route path="/patient/appointments" element={<ScheduledAppointments/>}/>
+                <Route path="/patient/appointments" element={<PatientHome/>}/>
                 <Route path="/patient/login" element={<PatientLoginPage/>}/>
                 <Route path="/medic/home" element={<MedicHomePage/>}/>
                 <Route path="/medic/browser" element={<MedicPage/>}/>
