@@ -1,17 +1,16 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import { useNavigate } from "react-router-dom";
 import "../styles/ButtonOne.css"
 
 export function ButtonOne({ text, to }) {
     const navigate = useNavigate();
-  
+
     const handleClick = () => {
-      navigate(to); // Navega a la ruta especificada
+        navigate(to);
     };
-  
+
     return (
-      <button className="ButtonOne" onClick={handleClick}>
-        <span className="text-button">{text}</span>
-      </button>
+        <button className="ButtonOne" onClick={handleClick}>
+            <span className="text-button">{text}</span>
+        </button>
     );
 }   

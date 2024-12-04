@@ -1,0 +1,24 @@
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from "react-router-dom";
+import Inicio from "./Inicio";
+import Calendario from "./Calendario";
+import Horario from "./Horario";
+
+export default function Especialista() {
+    return (
+        <Router>
+            <nav>
+                <Link to="/InicioDoctor">Inicio</Link>
+                |
+                <Link to="/CalendarioDoctor">Calendario</Link>
+                |
+                <Link to="/HorarioDoctor">Días de trabajo</Link>
+            </nav>
+            <Routes>
+                <Route path="/InicioDoctor" element={<Inicio/>}/>
+                <Route path="/CalendarioDoctor" element={<Calendario/>}/>
+                <Route path="/HorarioDoctor" element={<Horario/>}/>
+                <Route path="*" element={<Navigate to="/InicioDoctor" replace/>}/>
+            </Routes>
+        </Router>
+    );
+}

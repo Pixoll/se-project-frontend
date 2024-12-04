@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/ScheduledAppointments.css";
 
-const ScheduledAppointments = () => {
+export default function ScheduledAppointments() {
     const [date, setDate] = useState(new Date());
     const [appointments, setAppointments] = useState([]);
 
@@ -17,7 +17,7 @@ const ScheduledAppointments = () => {
                 console.error("Error al cargar citas:", error);
             }
         };
-    
+
         fetchAppointments();
     }, []);
 
@@ -57,18 +57,20 @@ const ScheduledAppointments = () => {
         const [startHour, startMinute] = slot.split("-")[0].split(":");
         const startDateTime = new Date(date);
         startDateTime.setHours(parseInt(startHour, 10), parseInt(startMinute, 10), 0, 0);
-    
+
         const appointment = appointments.find(app => app.date.getTime() === startDateTime.getTime());
         return appointment ? (
             <div className="appointment-details">
                 <p>Con: {appointment.specialist}</p>
-                <button className="ButtonOne" onClick={() => handleCancelAppointment(appointment.id)}>Cancelar Cita</button>
+                <button className="ButtonOne" onClick={() => handleCancelAppointment(appointment.id)}>
+                    Cancelar Cita
+                </button>
             </div>
         ) : (
             <p className="no-appointment">Sin citas</p>
         );
     };
-    
+
     return (
         <div className="scheduled-appointments">
             <h1 className="welcome">Tus Citas Agendadas</h1>
@@ -96,7 +98,5 @@ const ScheduledAppointments = () => {
             </div>
             <div className="footer-bar"></div>
         </div>
-    );    
+    );
 };
-
-export default ScheduledAppointments;

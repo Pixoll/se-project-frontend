@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/funcionario.css";
 
-const Funcionario = () => {
+export default function Funcionario() {
     const [date, setDate] = useState(new Date());
     const [appointments, setAppointments] = useState([]);
-    const [selectedAppointment, setSelectedAppointment] = useState(null); // Para ver la ficha del paciente
-    const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState(null); // Almacena la cita a aplazar
-    const [newDate, setNewDate] = useState(new Date()); // Nueva fecha para aplazar la cita
-    const [isModalOpen, setIsModalOpen] = useState(false); // Controla la visibilidad del modal
-    const [isPatientModalOpen, setIsPatientModalOpen] = useState(false); // Controla la visibilidad del modal
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
+    const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState(null);
+    const [newDate, setNewDate] = useState(new Date());
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
 
     useEffect(() => {
-        // Simulación de obtener citas desde un servidor
         const fetchedAppointments = [
             {
                 id: 1,
@@ -39,8 +38,8 @@ const Funcionario = () => {
     };
 
     const handleRescheduleClick = (id) => {
-        setRescheduleAppointmentId(id); // Guardamos el ID de la cita que se quiere aplazar
-        setIsModalOpen(true); // Abrimos el modal
+        setRescheduleAppointmentId(id);
+        setIsModalOpen(true);
     };
 
     const handleRescheduleAppointment = () => {
@@ -49,7 +48,7 @@ const Funcionario = () => {
         ));
         alert("Cita aplazada a " + newDate.toDateString());
         setRescheduleAppointmentId(null);
-        setIsModalOpen(false); // Cerrar el modal después de confirmar
+        setIsModalOpen(false);
     };
 
     const handleConfirmAppointment = (id) => {
@@ -66,8 +65,8 @@ const Funcionario = () => {
 
     const closePatientModal = () => {
         setSelectedAppointment(null);
-        setIsPatientModalOpen(false); // Cerrar el modal después de confirmar
-    }
+        setIsPatientModalOpen(false);
+    };
 
     const renderAppointments = () => {
         return appointments
@@ -76,10 +75,20 @@ const Funcionario = () => {
                 <div key={appointment.id} className="appointment">
                     <p>Cita a las {appointment.date.getHours()}:00 con {appointment.specialist}</p>
                     <p>Paciente: {appointment.patient.name}</p>
-                    <button className="ButtonOne" onClick={() => viewPatientDetails(appointment)}>Ver Ficha Paciente</button>
-                    <button className="ButtonOne" onClick={() => handleRescheduleClick(appointment.id)}>Aplazar Cita</button>
-                    <button className="ButtonOne" onClick={() => handleCancelAppointment(appointment.id)}>Cancelar Cita</button>
-                    <button className="ButtonOne" onClick={() => handleConfirmAppointment(appointment.id)}>Confirmar Cita</button>
+                    <button className="ButtonOne" onClick={() => viewPatientDetails(appointment)}>
+                        Ver Ficha Paciente
+                    </button>
+                    <button className="ButtonOne" onClick={() => handleRescheduleClick(appointment.id)}>
+                        Aplazar Cita
+                    </button>
+                    <button className="ButtonOne" onClick={() => handleCancelAppointment(appointment.id)}>
+                        Cancelar
+                        Cita
+                    </button>
+                    <button className="ButtonOne" onClick={() => handleConfirmAppointment(appointment.id)}>
+                        Confirmar
+                        Cita
+                    </button>
                 </div>
             ));
     };
@@ -100,7 +109,9 @@ const Funcionario = () => {
         return null;
     };
 
-    const hasConfirmedAppointments = appointments.some(appointment => appointment.date.toDateString() === date.toDateString() && appointment.confirmed);
+    // const hasConfirmedAppointments = appointments.some(appointment =>
+    //     appointment.date.toDateString() === date.toDateString() && appointment.confirmed
+    // );
 
     return (
         <div className="funcionario-view">
@@ -129,7 +140,8 @@ const Funcionario = () => {
                             />
                         </div>
                         <div className="button-container">
-                            <button className="ButtonOne" onClick={handleRescheduleAppointment}>Confirmar Nueva Fecha</button>
+                            <button className="ButtonOne" onClick={handleRescheduleAppointment}>Confirmar Nueva Fecha
+                            </button>
                             <button className="ButtonOne" onClick={() => setIsModalOpen(false)}>Cancelar</button>
                         </div>
                     </div>
@@ -153,5 +165,3 @@ const Funcionario = () => {
         </div>
     );
 };
-
-export default Funcionario;
