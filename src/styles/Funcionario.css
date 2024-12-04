@@ -1,4 +1,4 @@
-/* Barra Inferior (meramente estetico) */
+/* Barra Inferior (meramente estético) */
 .footer-bar {
     position: fixed;
     bottom: 0;
@@ -42,7 +42,7 @@
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
-    max-width: 600px;  /* Aumenta el ancho máximo del modal */
+    max-width: 600px; /* Aumenta el ancho máximo del modal */
     width: 90%;
     z-index: 1001;
 }

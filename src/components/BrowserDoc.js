@@ -26,7 +26,7 @@ export function BrowserDoc() {
     // };
 
     return (
-        <div className="ContainerBrower">
+        <div className="ContainerBrowser">
             <h3 className="title">BUSCA TU ESPECIALISTA</h3>
             <form className="FormBrowser">
                 <input type="specialist" value={specialist} onChange={(e) => setSpecialist(e.target.value)}

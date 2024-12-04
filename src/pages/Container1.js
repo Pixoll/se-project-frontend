@@ -1,5 +1,5 @@
 import { ButtonOne } from "../components/ButtonOne";
-import "../styles/container1.css"
+import "../styles/Container1.css"
 
 export default function Container1() {
     return (

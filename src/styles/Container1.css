@@ -1,4 +1,4 @@
-.Container1{
+.Container1 {
     position: fixed;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -6,23 +6,27 @@
     height: 100%;
     width: 100%;
 }
+
 @font-face {
     font-family: "Codec Pro";
     src: url("../assets/fonts/CodecPro-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
-  }
+}
+
 @font-face {
     font-family: "Migra";
     src: url("../assets/fonts/MigraItalic-ExtraboldItalic.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
-  }
-.Column_1{
+}
+
+.Column_1 {
     display: grid;
     place-items: center;
 }
-.columna2{
+
+.columna2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: end;
@@ -31,16 +35,17 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-.welcome{
+
+.welcome {
     color: #336793;
     font-size: 85px;
     text-align: center;
-    font-family: "Codec Pro";
+    font-family: "Codec Pro", serif;
 }
 
-.subWelcome{
+.subWelcome {
     color: #202020;
     font-size: 45px;
     text-align: center;
-    font-family: "Codec Pro";
+    font-family: "Codec Pro", serif;
 }
