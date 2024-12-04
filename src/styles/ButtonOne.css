@@ -3,26 +3,25 @@
     src: url('../fonts/Migra/MigraItalic-ExtraboldItalic.ttf') format('truetype'); /* Ruta al archivo */
     font-weight: normal;
     font-style: normal;
-  }
-.ButtonOne{
+}
+
+.ButtonOne {
     background-color: transparent;
     color: #333;
     border: 2px solid #336793;
     font-size: 20px;
-    font-family: Migra;
+    font-family: Migra, cursive;
     text-transform: uppercase;
-    padding-left: 20vh;
-    padding-right: 25vh;
-    padding-top: 30vh;
-    padding-bottom: 30vh;
+    padding: 1em;
     margin: 10vh;
     cursor: pointer;
 }
-.ButtonOne:hover{
+
+.ButtonOne:hover {
     background-color: #336793;
     color: white;
 }
 
-.ButtonOne:focus{
+.ButtonOne:focus {
     box-shadow: 0 0 5px rgba(6, 7, 8, 0.5);
 }
