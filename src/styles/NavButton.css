@@ -5,7 +5,7 @@
     font-style: normal;
 }
 
-.ButtonOne {
+.nav-button {
     background-color: transparent;
     color: #333;
     border: 2px solid #336793;
@@ -17,11 +17,11 @@
     cursor: pointer;
 }
 
-.ButtonOne:hover {
+.nav-button:hover {
     background-color: #336793;
     color: white;
 }
 
-.ButtonOne:focus {
+.nav-button:focus {
     box-shadow: 0 0 5px rgba(6, 7, 8, 0.5);
 }

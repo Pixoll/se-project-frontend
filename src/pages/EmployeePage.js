@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../styles/Funcionario.css";
+import "../styles/EmployeePage.css";
 
-export default function Funcionario() {
+export default function EmployeePage() {
     const [date, setDate] = useState(new Date());
     const [appointments, setAppointments] = useState([]);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
@@ -75,17 +75,17 @@ export default function Funcionario() {
                 <div key={appointment.id} className="appointment">
                     <p>Cita a las {appointment.date.getHours()}:00 con {appointment.specialist}</p>
                     <p>Paciente: {appointment.patient.name}</p>
-                    <button className="ButtonOne" onClick={() => viewPatientDetails(appointment)}>
+                    <button className="nav-button" onClick={() => viewPatientDetails(appointment)}>
                         Ver Ficha Paciente
                     </button>
-                    <button className="ButtonOne" onClick={() => handleRescheduleClick(appointment.id)}>
+                    <button className="nav-button" onClick={() => handleRescheduleClick(appointment.id)}>
                         Aplazar Cita
                     </button>
-                    <button className="ButtonOne" onClick={() => handleCancelAppointment(appointment.id)}>
+                    <button className="nav-button" onClick={() => handleCancelAppointment(appointment.id)}>
                         Cancelar
                         Cita
                     </button>
-                    <button className="ButtonOne" onClick={() => handleConfirmAppointment(appointment.id)}>
+                    <button className="nav-button" onClick={() => handleConfirmAppointment(appointment.id)}>
                         Confirmar
                         Cita
                     </button>
@@ -140,9 +140,9 @@ export default function Funcionario() {
                             />
                         </div>
                         <div className="button-container">
-                            <button className="ButtonOne" onClick={handleRescheduleAppointment}>Confirmar Nueva Fecha
+                            <button className="nav-button" onClick={handleRescheduleAppointment}>Confirmar Nueva Fecha
                             </button>
-                            <button className="ButtonOne" onClick={() => setIsModalOpen(false)}>Cancelar</button>
+                            <button className="nav-button" onClick={() => setIsModalOpen(false)}>Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -156,7 +156,7 @@ export default function Funcionario() {
                         <p>RUT del paciente: {selectedAppointment.patient.id}</p>
                         <p>Detalles: {selectedAppointment.patient.details}</p>
                         <div className="button-container">
-                            <button className="ButtonOne" onClick={closePatientModal}>Cerrar Ficha</button>
+                            <button className="nav-button" onClick={closePatientModal}>Cerrar Ficha</button>
                         </div>
                     </div>
                 </div>

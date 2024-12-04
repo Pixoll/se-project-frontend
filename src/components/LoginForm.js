@@ -1,8 +1,8 @@
 import { useState } from "react";
-import "../styles/LoginForms.css"
-import { ButtonOne } from "./ButtonOne";
+import "../styles/LoginForm.css"
+import { NavButton } from "./NavButton";
 
-export default function LoginFrom() {
+export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -11,18 +11,18 @@ export default function LoginFrom() {
     // };
 
     return (
-        <div className="ContainerG">
-            <div className="ContainerLogin">
-                <form className="FormLogin">
-                    <label htmlFor="email">RUT o Correo Electronico</label>
+        <div className="login-container">
+            <div className="login-div">
+                <form className="login-form">
+                    <label htmlFor="email">Correo electrónico</label>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Correo Electronico"
+                        placeholder="Correo electrónico"
                         required
                     />
-                    <label htmlFor="password">Contraseñx</label>
+                    <label htmlFor="password">Contraseña</label>
                     <input
                         type="password"
                         value={password}
@@ -31,7 +31,7 @@ export default function LoginFrom() {
                         required
                     />
                 </form>
-                <ButtonOne text={"INICIAR SESIÓN"} to={"/Browser"}/>
+                <NavButton text={"INICIAR SESIÓN"} to={"/doctor-browser"}/>
             </div>
         </div>
     );

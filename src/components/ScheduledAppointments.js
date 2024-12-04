@@ -62,7 +62,7 @@ export default function ScheduledAppointments() {
         return appointment ? (
             <div className="appointment-details">
                 <p>Con: {appointment.specialist}</p>
-                <button className="ButtonOne" onClick={() => handleCancelAppointment(appointment.id)}>
+                <button className="nav-button" onClick={() => handleCancelAppointment(appointment.id)}>
                     Cancelar Cita
                 </button>
             </div>

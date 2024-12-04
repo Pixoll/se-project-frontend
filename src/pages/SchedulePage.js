@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Horario() {
+export default function SchedulePage() {
     // Paso 1: Recuperar el estado del localStorage o usar el estado predeterminado
     const [buttonColors, setButtonColors] = useState(
         JSON.parse(localStorage.getItem("buttonColors")) || [false, false, false, false, false]

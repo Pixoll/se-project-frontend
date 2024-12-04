@@ -5,8 +5,11 @@
     font-style: normal;
 }
 
-.ContainerBrowser {
+.browser-container {
     padding-top: 20%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
 }
 
 .title {
@@ -14,7 +17,7 @@
     font-size: 20px;
 }
 
-.FormBrowser {
+.browser-form {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr auto;
@@ -22,19 +25,19 @@
     margin: 0 auto;
 }
 
-.FormBrowser input {
+.browser-form input {
     padding: 0.5rem;
     border: 2px solid #5387a3;
 }
 
-.ButtonBrowser {
+.browser-button {
     padding: 0.5rem;
     border: 2px solid #5387a3;
     background-color: transparent;
     color: #333;
 }
 
-.ButtonBrowser:hover {
+.browser-button:hover {
     background-color: #336793;
     color: white;
     cursor: pointer;

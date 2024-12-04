@@ -1,20 +1,20 @@
 import { Route, Routes } from "react-router-dom";
 import ScheduledAppointments from "./components/ScheduledAppointments";
-import Browser from "./pages/Browser";
+import BrowserPage from "./pages/BrowserPage";
 import HomePage from "./pages/HomePage";
-import Especialistas from "./pages/Especialista";
-import Funcionario from "./pages/Funcionario";
-import LoginFunEsp from "./pages/LoginFunEspe";
+import DoctorHomePage from "./pages/DoctorHomePage";
+import EmployeePage from "./pages/EmployeePage";
+import LoginPage from "./pages/LoginPage";
 
 export default function App() {
     return (
         <Routes>
             <Route path="/" element={<HomePage/>}/>
-            <Route path="/funcionario" element={<Funcionario/>}/>
-            <Route path="/especialistas" element={<Especialistas/>}/>
-            <Route path="/patients/:rut/appointments" element={<ScheduledAppointments/>}/>
-            <Route path="/LoginFunEsp" element={<LoginFunEsp/>}/>
-            <Route path="/Browser" element={<Browser/>}/>
+            <Route path="/employee" element={<EmployeePage/>}/>
+            <Route path="/doctor" element={<DoctorHomePage/>}/>
+            <Route path="/appointments" element={<ScheduledAppointments/>}/>
+            <Route path="/patient/login" element={<LoginPage/>}/>
+            <Route path="/doctor-browser" element={<BrowserPage/>}/>
         </Routes>
     );
 }
