@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Calendar, { TileClassNameFunc } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../styles/ScheduledAppointments.css";
+import "../styles/PatientHome.css";
 
 type Appointment = {
     id: number;
