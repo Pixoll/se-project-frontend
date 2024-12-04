@@ -132,6 +132,61 @@ html, body {
     transform: scale(1.05);
 }
 
+.appointment-list-container {
+    width: 350px;
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    height: 400px;
+}
+
+.appointment-list-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.appointment {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    word-wrap: break-word;
+}
+
+.appointment p {
+    margin: 0;
+    color: #202020;
+    font-size: 14px;
+}
+
+.appointment-list-container .nav-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    font-size: 10px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: "Codec Pro", sans-serif;
+    transition: all 0.3s ease-in-out;
+    margin-top: 5px;
+}
+
+.appointmente-list-container .nav-button:hover {
+    background-color: #ff1a1a;
+}
+
 /* Contenedor para organizar el calendario y el horario horizontalmente */
 .calendar-and-schedule {
     display: flex;

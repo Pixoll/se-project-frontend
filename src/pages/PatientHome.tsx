@@ -88,6 +88,21 @@ export default function PatientHome() {
         <div className="scheduled-appointments">
             <h1 className="welcome">Tus Citas Agendadas</h1>
             <div className="calendar-and-schedule">
+                <div className={"appointment-list-container"}>
+                    <h2 className={"sub-welcome"}>Lista de Citas</h2>
+                    <ul>
+                        {appointments.map(appointment => (
+                            <li key={appointment.id} className={"appointment"}>
+                                <p>Fecha: {appointment.date.toLocaleDateString()}</p>
+                                <p>Especialista: {appointment.specialist}</p>
+                                <p>Paciente: {appointment.patient.name}</p>
+                                <button className={"nav-button"} onClick={() => handleCancelAppointment(appointment.id)}>
+                                    Cancelar Cita
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
                 <div className="calendar-container">
                     <Calendar
                         onChange={(d) => setDate(d as Date)}
