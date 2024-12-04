@@ -2,11 +2,7 @@ import { useState, useEffect } from "react";
 
 const apiUrl = "http://localhost:3000/api/v1";
 
-export default function useRequest<T, M extends Method = "get">(
-    method: M,
-    endpoint: string,
-    ...[payload]: M & "get" | "delete" extends never ? [] : [payload: object]
-): FetchResult<T> {
+export default function useFetch<T>(endpoint: string): FetchResult<T> {
     const [status, setStatus] = useState<FetchStatus>("loading");
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -16,11 +12,7 @@ export default function useRequest<T, M extends Method = "get">(
         const abortController = new AbortController();
         setController(abortController);
 
-        fetch(apiUrl + endpoint, {
-            ...payload && { body: JSON.stringify(payload) },
-            method,
-            signal: abortController.signal,
-        })
+        fetch(apiUrl + endpoint)
             .then(async (response) => {
                 const json = await response.json();
                 if (response.status >= 400) {
@@ -80,5 +72,3 @@ type FetchFailed = {
 };
 
 type FetchResult<T> = FetchInProgress | FetchSuccess<T> | FetchFailed;
-
-type Method = "get" | "post" | "put" | "patch" | "delete";
