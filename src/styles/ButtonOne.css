@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "Migra";       /* Nombre de la fuente que usarás en CSS */
-    src: url("../fonts/Migra/MigraItalic-ExtraboldItalic.ttf") format("truetype"); /* Ruta al archivo */
+    font-family: "Migra";
+    src: url("../assets/fonts/MigraItalic-ExtraboldItalic.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
