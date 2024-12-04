@@ -83,7 +83,7 @@ export default function ScheduledAppointments() {
                     />
                 </div>
                 <div className="schedule-container">
-                    <h2 className="subWelcome">Horario</h2>
+                    <h2 className="sub-welcome">Horario</h2>
                     <ul className="time-slots">
                         {generateTimeSlots().map((slot, index) => (
                             <li key={index} className="time-slot">

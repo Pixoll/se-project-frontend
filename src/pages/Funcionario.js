@@ -123,7 +123,7 @@ export default function Funcionario() {
                     tileClassName={tileClassName}
                 />
             </div>
-            <h2 className="subWelcome">Citas para el {date.toDateString()}</h2>
+            <h2 className="sub-welcome">Citas para el {date.toDateString()}</h2>
             <div className="appointments-list">
                 {renderAppointments()}
             </div>
