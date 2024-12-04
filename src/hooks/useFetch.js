@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 
+const apiUrl = "http://localhost:3000/api/v1";
+
 /**
  * @template T
- * @param {string} url
+ * @param {string} endpoint
  * @returns {FetchResult<T>}
  */
-export default function useFetch(url) {
+export default function useFetch(endpoint) {
     const [status, setStatus] = /** @type {State<FetchStatus>} */ (useState("loading"));
     const [data, setData] = /** @type {State<object | null>} */ (useState(null));
     const [error, setError] = /** @type {State<string | null>} */ (useState(null));
@@ -15,7 +17,7 @@ export default function useFetch(url) {
         const abortController = new AbortController();
         setController(abortController);
 
-        fetch(url, { signal: abortController.signal })
+        fetch(apiUrl + endpoint, { signal: abortController.signal })
             .then(async (response) => {
                 const json = await response.json();
                 if (response.status >= 400) {
@@ -38,7 +40,7 @@ export default function useFetch(url) {
             });
 
         return () => abortController.abort();
-    }, [url]);
+    }, [endpoint]);
 
     const handleCancelRequest = () => {
         if (controller) {
