@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, ReactNode, useCallback, useEffect, useReducer, } from "react";
+import React, { createContext, useCallback, useEffect, useReducer, } from "react";
 
 /** @type {AuthState} */
 const initialState = {
@@ -66,7 +66,7 @@ const AuthProvider = ({ children }) => {
             localStorage.removeItem("token");
             localStorage.removeItem("token-type");
         }
-    }, [state.isAuthenticated, state.token]);
+    }, [state.isAuthenticated, state.token, state.type]);
 
     const login = useCallback(
         /**
@@ -136,6 +136,6 @@ export default AuthProvider;
 
 /**
  * @typedef {{
- *     children: ReactNode;
+ *     children: React.ReactNode;
  * }} AuthProviderProps
  */
