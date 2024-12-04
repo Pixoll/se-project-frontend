@@ -8,9 +8,10 @@ import useForm from "../hooks/useForm";
 
 type LoginFormProps = {
     type: TokenType;
+    redirectTo: string;
 };
 
-export default function LoginForm({ type }: LoginFormProps) {
+export default function LoginForm({ type, redirectTo }: LoginFormProps) {
     const { formState, onInputChange, onResetForm } = useForm({
         rut: "",
         password: "",
@@ -35,7 +36,7 @@ export default function LoginForm({ type }: LoginFormProps) {
                 const token = response.data.token as string;
                 login("patient", token);
                 onResetForm();
-                navigate(`/${type}/appointments`);
+                navigate(`/${type + (redirectTo.startsWith("/") ? redirectTo : "/" + redirectTo)}`);
             })
             .catch((error) => {
                 console.log("login failed:", error.response.data);
