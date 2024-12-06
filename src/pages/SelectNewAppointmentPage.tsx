@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
+import { useNavigate } from "react-router-dom";
 import { BackButton } from "../components/BackButton";
 import NewAppointmentSlot from "../components/NewAppointmentSlot";
 import useFetch from "../hooks/useFetch";
-import "../styles/NewAppointmentPage.css";
+import "../styles/SelectNewAppointmentPage.css";
 
 type Medic = {
     rut: string;
@@ -45,6 +46,7 @@ type DaySlot = {
 const days: Array<TimeSlot["day"]> = ["su", "mo", "tu", "we", "th", "fr", "sa"];
 
 export default function SelectNewAppointmentPage() {
+    const navigation = useNavigate();
     const [date, setDate] = useState(new Date());
     const [medics, setMedics] = useState<string[]>([]);
     const [specialties, setSpecialties] = useState<number[]>([]);
@@ -84,6 +86,20 @@ export default function SelectNewAppointmentPage() {
         setSpecialties(prevSpecialties =>
             prevSpecialties.includes(id) ? prevSpecialties.filter(s => s !== id) : [...prevSpecialties, id]
         );
+    };
+
+    const handleScheduleSlot = (slot: DaySlot) => {
+        navigation("/new-appointment/schedule", {
+            state: {
+                slotId: slot.id,
+                date: toDateString(date),
+                medic: {
+                    rut: slot.rut,
+                    fullName: slot.fullName,
+                    specialty: slot.specialty,
+                },
+            },
+        });
     };
 
     const dateString = toDateString(date);
@@ -156,7 +172,7 @@ export default function SelectNewAppointmentPage() {
                         <NewAppointmentSlot
                             key={slot.id}
                             slot={slot}
-                            handleScheduleSlot={() => {}}
+                            handleScheduleSlot={handleScheduleSlot}
                         />
                     )) : <p className="no-appointment">Sin horarios disponibles</p>}
                 </ul>

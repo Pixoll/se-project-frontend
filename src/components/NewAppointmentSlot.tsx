@@ -9,7 +9,7 @@ type DaySlot = {
 
 type NewAppointmentSlotProps = {
     slot: DaySlot;
-    handleScheduleSlot: (id: number) => void;
+    handleScheduleSlot: (slot: DaySlot) => void;
 }
 
 export default function NewAppointmentSlot({ slot, handleScheduleSlot }: NewAppointmentSlotProps) {
@@ -22,7 +22,7 @@ export default function NewAppointmentSlot({ slot, handleScheduleSlot }: NewAppo
                         <b>Médico:</b> {slot.fullName} (<em>Rut: {slot.rut}</em>)
                     </p>
                     <p><b>Especialidad:</b> {slot.specialty}</p>
-                    <button className="cancel-button" onClick={() => handleScheduleSlot(slot.id)}>
+                    <button className="cancel-button" onClick={() => handleScheduleSlot(slot)}>
                         Agendar cita
                     </button>
                 </div>

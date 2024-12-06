@@ -8,7 +8,6 @@
 .login-container {
     display: grid;
     place-items: center;
-    height: 100vh;
     background-color: #d6e2ef;
 }
 
@@ -16,13 +15,12 @@
     display: grid;
     place-items: center;
     background-color: #ffffff;
-    grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr;
     justify-items: center;
     border: 2px solid #5387a3;
-    border-radius: 15%;
-    height: 90%;
+    border-radius: 50px;
     width: 45%;
+    margin: 25px 25px 100px;
 }
 
 .login-form {

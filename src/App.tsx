@@ -1,16 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import SelectNewAppointmentPage from "./pages/SelectNewAppointmentPage";
-import PatientHome from "./pages/PatientHome";
 import AuthProvider from "./context/AuthContext";
-import MedicPage from "./pages/MedicPage";
+import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminPage from "./pages/AdminPage";
 import CalendarPage from "./pages/CalendarPage";
+import HomePage from "./pages/HomePage";
 import MedicHomePage from "./pages/MedicHomePage";
 import MedicLoginPage from "./pages/MedicLoginPage";
-import AdminPage from "./pages/AdminPage";
-import AdminLoginPage from "./pages/AdminLoginPage";
-import HomePage from "./pages/HomePage";
-import PatientLoginPage from "./pages/PatientLoginPage";
+import MedicPage from "./pages/MedicPage";
 import MedicSchedulePage from "./pages/MedicSchedulePage";
+import PatientHome from "./pages/PatientHome";
+import PatientLoginPage from "./pages/PatientLoginPage";
+import SelectNewAppointmentPage from "./pages/SelectNewAppointmentPage";
 
 export default function App() {
     return (
