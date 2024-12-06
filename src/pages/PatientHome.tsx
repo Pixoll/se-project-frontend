@@ -27,8 +27,7 @@ type ParsedAppointment = {
     id: string;
     medic: Medic;
     date: string;
-    start: string;
-    end: string;
+    slot: string;
     description: string;
     confirmed: boolean;
 };
@@ -54,11 +53,12 @@ export default function PatientHome() {
         id: a.id,
         medic: medics.get(a.medicRut)!,
         date: a.date,
-        start: a.start,
-        end: a.end,
+        slot: `${a.start.replace(/^(\d+:\d+):00$/, "$1")} - ${a.end.replace(/^(\d+:\d+):00$/, "$1")}`,
         description: a.description,
         confirmed: a.confirmed,
     }));
+
+    const selectedDayAppointments = appointments.filter(a => a.date === toDateString(date));
 
     const handleCancelAppointment = (id: string) => {
         // setAppointments(appointments.filter(appointment => appointment.id !== id));
@@ -81,35 +81,6 @@ export default function PatientHome() {
         return null;
     };
 
-    const generateTimeSlots = () => {
-        const slots = [];
-        const start = 8;
-        const end = 22;
-        for (let hour = start; hour < end; hour++) {
-            slots.push(`${hour}:00 - ${hour}:30`);
-            slots.push(`${hour}:30 - ${hour + 1}:00`);
-        }
-        return slots;
-    };
-
-    const getAppointmentForSlot = (slot: string) => {
-        const [startHour, startMinute] = slot.split("-")[0].split(":");
-        const startDateTime = new Date(date);
-        startDateTime.setHours(parseInt(startHour, 10), parseInt(startMinute, 10), 0, 0);
-
-        const appointment = appointments.find(app => app.date === toDateString(startDateTime));
-        return appointment ? (
-            <div className="appointment-details">
-                <p>Con: {appointment.medic.fullName}</p>
-                <button className="nav-button" onClick={() => handleCancelAppointment(appointment.id)}>
-                    Cancelar Cita
-                </button>
-            </div>
-        ) : (
-            <p className="no-appointment">Sin citas</p>
-        );
-    };
-
     return (
         <div className="scheduled-appointments">
             <h1 className="welcome">Tus citas agendadas</h1>
@@ -119,12 +90,21 @@ export default function PatientHome() {
                     <ul>
                         {appointments.map(appointment => (
                             <li key={appointment.id} className={"appointment"}>
-                                <p>Fecha: {appointment.date}</p>
-                                <p>Especialista: {appointment.medic.fullName}</p>
-                                <button className={"nav-button"}
-                                        onClick={() => handleCancelAppointment(appointment.id)}>
-                                    Cancelar cita
-                                </button>
+                                <p><b>Fecha:</b> {appointment.date}</p>
+                                <p><b>Horario:</b> {appointment.slot}</p>
+                                <p>
+                                    <b>Especialista:</b>
+                                    {appointment.medic.fullName} (<em>Rut: {appointment.medic.rut}</em>)
+                                </p>
+                                <p><b>Estado:</b> {appointment.confirmed ? "Confirmado" : "Por confirmar"}</p>
+                                {!appointment.confirmed && <>
+                                    <button
+                                        className={"cancel-button"}
+                                        onClick={() => handleCancelAppointment(appointment.id)}
+                                    >
+                                        Cancelar cita
+                                    </button>
+                                </>}
                             </li>
                         ))}
                     </ul>
@@ -139,14 +119,25 @@ export default function PatientHome() {
                 <div className="schedule-container">
                     <h2 className="sub-welcome">Horario</h2>
                     <ul className="time-slots">
-                        {generateTimeSlots().map((slot, index) => (
-                            <li key={index} className="time-slot">
-                                <div className="time-slot-header">{slot}</div>
+                        {selectedDayAppointments.length > 0 ? selectedDayAppointments.map((appointment) => (
+                            <li key={appointment.id} className="time-slot">
+                                <div className="time-slot-header">{appointment.slot}</div>
                                 <div className="time-slot-content">
-                                    {getAppointmentForSlot(slot)}
+                                    <div className="appointment-details">
+                                        <p>
+                                            <b>Especialista:</b> {appointment.medic.fullName} (<em>Rut: {appointment.medic.rut}</em>)
+                                        </p>
+                                        <p><b>Estado:</b> {appointment.confirmed ? "Confirmado" : "Por confirmar"}</p>
+                                        {!appointment.confirmed && (
+                                            <button className="cancel-button"
+                                                    onClick={() => handleCancelAppointment(appointment.id)}>
+                                                Cancelar Cita
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                             </li>
-                        ))}
+                        )) : <p className="no-appointment">Sin citas</p>}
                     </ul>
                 </div>
             </div>
