@@ -3,6 +3,7 @@ import { createContext, FunctionComponent, ReactNode, useCallback, useEffect, us
 const initialState: AuthState = {
     isAuthenticated: false,
     type: null,
+    rut: null,
     token: null,
 };
 
@@ -18,9 +19,9 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
             };
         case "logout":
             return {
-                ...state,
                 isAuthenticated: false,
                 type: null,
+                rut: null,
                 token: null,
             };
         default:
@@ -34,11 +35,13 @@ const AuthProvider: FunctionComponent<AuthProviderProps> = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         const type = localStorage.getItem("token-type") as TokenType | null;
-        if (token && type) {
+        const rut = localStorage.getItem("token-rut");
+        if (token && type && rut) {
             dispatch({
                 type: "login",
                 payload: {
                     type,
+                    rut,
                     token,
                 },
             });
@@ -55,11 +58,12 @@ const AuthProvider: FunctionComponent<AuthProviderProps> = ({ children }) => {
         }
     }, [state.isAuthenticated, state.token, state.type]);
 
-    const login = useCallback((type: TokenType, token: string) => {
+    const login = useCallback((type: TokenType, rut: string, token: string) => {
         dispatch({
             type: "login",
             payload: {
                 type,
+                rut,
                 token,
             },
         });
@@ -87,10 +91,12 @@ export type TokenType = "patient" | "medic" | "admin";
 type AuthState = {
     isAuthenticated: true;
     type: TokenType;
+    rut: string;
     token: string;
 } | {
     isAuthenticated: false;
     type: null;
+    rut: null;
     token: null;
 };
 
@@ -98,6 +104,7 @@ type AuthAction = {
     type: "login";
     payload: {
         type: TokenType;
+        rut: string;
         token: string;
     };
 } | {
@@ -106,7 +113,7 @@ type AuthAction = {
 
 type AuthContextType = {
     state: AuthState;
-    login: (type: TokenType, token: string) => void;
+    login: (type: TokenType, rut: string, token: string) => void;
     logout: () => void;
 };
 

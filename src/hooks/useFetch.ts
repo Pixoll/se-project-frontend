@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "./useAuth";
 
 const apiUrl = "http://localhost:3000/api/v1";
 
@@ -7,12 +8,17 @@ export default function useFetch<T>(endpoint: string): FetchResult<T> {
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [controller, setController] = useState<AbortController | null>(null);
+    const { state } = useAuth();
 
     useEffect(() => {
         const abortController = new AbortController();
         setController(abortController);
 
-        fetch(apiUrl + endpoint)
+        fetch(apiUrl + endpoint, {
+            headers: {
+                authorization: `Bearer ${state.token}`,
+            },
+        })
             .then(async (response) => {
                 const json = await response.json();
                 if (response.status >= 400) {

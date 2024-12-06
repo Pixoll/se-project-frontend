@@ -34,7 +34,7 @@ export default function LoginForm({ type, redirectTo }: LoginFormProps) {
                 }
 
                 const token = response.data.token as string;
-                login(type, token);
+                login(type, formState.rut, token);
                 onResetForm();
                 navigate(`/${type + (redirectTo.startsWith("/") ? redirectTo : "/" + redirectTo)}`);
             })
