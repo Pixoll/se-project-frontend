@@ -21,6 +21,10 @@ export default function LoginForm({ type, redirectTo }: LoginFormProps) {
     const navigate = useNavigate();
     const { login } = useAuth();
 
+    const parsedType = type === "patient" ? "paciente"
+        : type === "medic" ? "médico"
+            : "administrador";
+
     const onLogin = (e: FormEvent) => {
         console.log("submit");
         e.preventDefault();
@@ -61,6 +65,7 @@ export default function LoginForm({ type, redirectTo }: LoginFormProps) {
 
     return (
         <div className="login-container">
+            <h2>{`Iniciar sesión como ${parsedType}`}</h2>
             <div className="login-div">
                 <form className="login-form" onSubmit={onLogin}>
                     <label htmlFor="rut">Rut</label>
