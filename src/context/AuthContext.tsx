@@ -52,9 +52,11 @@ const AuthProvider: FunctionComponent<AuthProviderProps> = ({ children }) => {
         if (state.isAuthenticated) {
             localStorage.setItem("token", state.token);
             localStorage.setItem("token-type", state.type);
+            localStorage.setItem("token-rut", state.rut);
         } else {
             localStorage.removeItem("token");
             localStorage.removeItem("token-type");
+            localStorage.removeItem("token-rut");
         }
     }, [state.isAuthenticated, state.token, state.type]);
 
