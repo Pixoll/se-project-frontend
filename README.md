@@ -2,6 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Preparation
+
+- Install all dependencies with `npm i`.
+- Start the API before the website.
+
 ## Available Scripts
 
 In the project directory, you can run:
