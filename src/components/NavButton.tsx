@@ -1,12 +1,14 @@
+import { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/NavButton.css";
 
 type NavButtonProps = {
     text: string;
     to: string;
+    style?: CSSProperties;
 };
 
-export function NavButton({ text, to }: NavButtonProps) {
+export function NavButton({ text, to, style }: NavButtonProps) {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -14,7 +16,7 @@ export function NavButton({ text, to }: NavButtonProps) {
     };
 
     return (
-        <button className="nav-button" onClick={handleClick}>
+        <button className="nav-button" onClick={handleClick} style={style}>
             <span>{text}</span>
         </button>
     );

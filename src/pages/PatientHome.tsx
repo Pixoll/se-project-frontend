@@ -4,6 +4,7 @@ import Calendar, { TileClassNameFunc } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/PatientHome.css";
 import { BackButton } from "../components/BackButton";
+import { NavButton } from "../components/NavButton";
 import PatientAppointmentItem from "../components/PatientAppointmentItem";
 import PatientSlotAppointmentItem from "../components/PatientSlotAppointmentItem";
 import { useAuth } from "../hooks/useAuth";
@@ -141,6 +142,12 @@ export default function PatientHome() {
                     </ul>
                 </div>
             </div>
+            <NavButton text={"Agendar nueva cita"} to={"/new-appointment"} style={{
+                position: "fixed",
+                left: "50%",
+                bottom: "10%",
+                transform: "translateX(-50%)",
+            }}/>
             <div className="footer-bar"></div>
         </div>
     );
