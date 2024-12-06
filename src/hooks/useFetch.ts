@@ -14,7 +14,10 @@ export default function useFetch<T>(endpoint: string): FetchResult<T> {
         const abortController = new AbortController();
         setController(abortController);
 
-        fetch(apiUrl + endpoint, {
+        const url = apiUrl + endpoint;
+        console.log(`fetching ${url}`);
+
+        fetch(url, {
             headers: {
                 authorization: `Bearer ${state.token}`,
             },
@@ -26,6 +29,8 @@ export default function useFetch<T>(endpoint: string): FetchResult<T> {
                     setStatus("failed");
                     return;
                 }
+
+                console.log(url, ":", json);
 
                 setData(json);
                 setStatus("success");
