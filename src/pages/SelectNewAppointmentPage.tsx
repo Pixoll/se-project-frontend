@@ -108,7 +108,11 @@ export default function SelectNewAppointmentPage() {
 
     scheduleData.forEach(group => {
         group.slots.forEach(slot => {
-            if (slot.day !== dayName || slot.appointmentDates.includes(dateString)) return;
+            if (
+                slot.day !== dayName
+                || slot.appointmentDates.includes(dateString)
+                || new Date(`${dateString} ${slot.start}`).getTime() <= Date.now()
+            ) return;
 
             daySlots.push({
                 id: slot.id,

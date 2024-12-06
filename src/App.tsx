@@ -10,6 +10,7 @@ import MedicPage from "./pages/MedicPage";
 import MedicSchedulePage from "./pages/MedicSchedulePage";
 import PatientHome from "./pages/PatientHome";
 import PatientLoginPage from "./pages/PatientLoginPage";
+import ScheduleNewAppointmentPage from "./pages/ScheduleNewAppointmentPage";
 import SelectNewAppointmentPage from "./pages/SelectNewAppointmentPage";
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/new-appointment" element={<SelectNewAppointmentPage/>}/>
+                <Route path="/new-appointment/schedule" element={<ScheduleNewAppointmentPage/>}/>
                 <Route path="/admin/home" element={<AdminPage/>}/>
                 <Route path="/admin/login" element={<AdminLoginPage/>}/>
                 <Route path="/patient/home" element={<PatientHome/>}/>

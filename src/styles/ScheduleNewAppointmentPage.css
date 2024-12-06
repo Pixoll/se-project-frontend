@@ -1,0 +1,52 @@
+.new-appointment-header {
+    place-items: center;
+    padding-top: 30px;
+}
+
+.new-appointment-container {
+    display: grid;
+    place-items: center;
+    background-color: #d6e2ef;
+}
+
+.new-appointment-div {
+    display: grid;
+    place-items: center;
+    background-color: #ffffff;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    border: 2px solid #5387a3;
+    border-radius: 50px;
+    width: 45%;
+    margin: 25px 25px 100px;
+}
+
+.new-appointment-form {
+    display: grid;
+    place-items: center;
+    grid-template-rows: 1fr 1fr;
+}
+
+.new-appointment-form label {
+    padding-top: 15%;
+    font-size: 100%;
+    color: #336793;
+    font-family: "Codec Pro", serif;
+}
+
+.new-appointment-form input {
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    padding-inline: 50%;
+    border: 2px solid #5387a3;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.new-appointment-form input:hover {
+    background-color: #3368933b;
+}
