@@ -1,6 +1,6 @@
 import "../styles/LoginForm.css";
 import axios from "axios";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TokenType } from "../context/AuthContext";
 import { useAuth } from "../hooks/useAuth";
@@ -12,6 +12,8 @@ type LoginFormProps = {
 };
 
 export default function LoginForm({ type, redirectTo }: LoginFormProps) {
+    const [userDoesNotExist, setUserDoesNotExist] = useState(false);
+    const [incorrectPassword, setIncorrectPassword] = useState(false);
     const { formState, onInputChange, onResetForm } = useForm({
         rut: "",
         password: "",
@@ -22,6 +24,8 @@ export default function LoginForm({ type, redirectTo }: LoginFormProps) {
     const onLogin = (e: FormEvent) => {
         console.log("submit");
         e.preventDefault();
+        setIncorrectPassword(false);
+        setUserDoesNotExist(false);
 
         axios
             .post(`http://localhost:3000/api/v1/${type}s/${formState.rut}/session`, {
@@ -29,8 +33,9 @@ export default function LoginForm({ type, redirectTo }: LoginFormProps) {
             })
             .then((response) => {
                 if (response.status >= 400) {
-                    console.error("login failed:", response.data);
-                    return;
+                    const error = new Error();
+                    Object.assign(error, { response });
+                    throw error;
                 }
 
                 const token = response.data.token as string;
@@ -39,6 +44,17 @@ export default function LoginForm({ type, redirectTo }: LoginFormProps) {
                 navigate(`/${type + (redirectTo.startsWith("/") ? redirectTo : "/" + redirectTo)}`);
             })
             .catch((error) => {
+                switch (error.response.status) {
+                    case 401:
+                        setIncorrectPassword(true);
+                        console.log("incorrect");
+                        break;
+                    case 404:
+                        setUserDoesNotExist(true);
+                        console.log("not exist");
+                        break;
+                }
+
                 console.log("login failed:", error.response.data);
             });
     };
@@ -69,6 +85,10 @@ export default function LoginForm({ type, redirectTo }: LoginFormProps) {
                         INICIAR SESIÓN
                     </button>
                 </form>
+                <span style={{ color: "red" }}>
+                    {userDoesNotExist ? "Usuario no existe." : ""}
+                    {incorrectPassword ? "Contraseña incorrecta." : ""}
+                </span>
             </div>
         </div>
     );
