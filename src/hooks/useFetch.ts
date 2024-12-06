@@ -49,7 +49,7 @@ export default function useFetch<T>(endpoint: string, params?: Record<string, un
             });
 
         return () => abortController.abort();
-    }, [endpoint, params]);
+    }, [endpoint, params, state.token]);
 
     const handleCancelRequest = () => {
         if (controller) {

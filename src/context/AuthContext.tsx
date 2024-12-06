@@ -58,7 +58,7 @@ const AuthProvider: FunctionComponent<AuthProviderProps> = ({ children }) => {
             localStorage.removeItem("token-type");
             localStorage.removeItem("token-rut");
         }
-    }, [state.isAuthenticated, state.token, state.type]);
+    }, [state.isAuthenticated, state.token, state.type, state.rut]);
 
     const login = useCallback((type: TokenType, rut: string, token: string) => {
         dispatch({
