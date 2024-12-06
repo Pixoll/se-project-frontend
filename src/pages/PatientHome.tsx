@@ -109,9 +109,10 @@ export default function PatientHome() {
                                 <p><b>Fecha:</b> {appointment.date}</p>
                                 <p><b>Horario:</b> {appointment.slot}</p>
                                 <p>
-                                    <b>Especialista:</b>
+                                    <b>Médico:</b>
                                     {appointment.medic.fullName} (<em>Rut: {appointment.medic.rut}</em>)
                                 </p>
+                                <p><b>Especialidad:</b> {appointment.medic.specialty}</p>
                                 <p><b>Estado:</b> {appointment.confirmed ? "Confirmado" : "Por confirmar"}</p>
                                 {!appointment.confirmed && <>
                                     <button
@@ -141,8 +142,9 @@ export default function PatientHome() {
                                 <div className="time-slot-content">
                                     <div className="appointment-details">
                                         <p>
-                                            <b>Especialista:</b> {appointment.medic.fullName} (<em>Rut: {appointment.medic.rut}</em>)
+                                            <b>Médico:</b> {appointment.medic.fullName} (<em>Rut: {appointment.medic.rut}</em>)
                                         </p>
+                                        <p><b>Especialidad:</b> {appointment.medic.specialty}</p>
                                         <p><b>Estado:</b> {appointment.confirmed ? "Confirmado" : "Por confirmar"}</p>
                                         {!appointment.confirmed && (
                                             <button className="cancel-button"
