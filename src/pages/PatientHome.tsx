@@ -117,7 +117,7 @@ export default function PatientHome() {
                     />
                 </div>
                 <div className="schedule-container">
-                    <h2 className="sub-welcome">Horario</h2>
+                    <h2 className="sub-welcome">Horario {date.toLocaleDateString()}</h2>
                     <ul className="time-slots">
                         {selectedDayAppointments.length > 0 ? selectedDayAppointments.map((appointment) => (
                             <li key={appointment.id} className="time-slot">
