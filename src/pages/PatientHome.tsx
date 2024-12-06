@@ -1,9 +1,10 @@
+import axios from "axios";
 import { useState } from "react";
 import Calendar, { TileClassNameFunc } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/PatientHome.css";
 import { useAuth } from "../hooks/useAuth";
-import useFetch from "../hooks/useFetch";
+import useFetch, { apiUrl } from "../hooks/useFetch";
 
 type Appointment = {
     id: string;
@@ -61,8 +62,23 @@ export default function PatientHome() {
     const selectedDayAppointments = appointments.filter(a => a.date === toDateString(date));
 
     const handleCancelAppointment = (id: string) => {
-        // setAppointments(appointments.filter(appointment => appointment.id !== id));
-        alert("Cita cancelada");
+        axios.delete(`${apiUrl}/patients/${state.rut}/appointments/${id}`, {
+            headers: {
+                Authorization: `Bearer ${state.token}`
+            },
+        }).then(response => {
+            if (response.status >= 400) {
+                const error = new Error();
+                Object.assign(error, { response });
+                throw error;
+            }
+
+            appointmentsFetchResult.reload();
+            alert("Cita cancelada");
+        }).catch((error) => {
+            const message = error instanceof Error ? error.message : `${error}`;
+            alert(`No se pudo cancelar la cita: ${message}`);
+        });
     };
 
     const tileClassName: TileClassNameFunc = ({ date, view }) => {
