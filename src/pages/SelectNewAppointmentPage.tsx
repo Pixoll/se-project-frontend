@@ -44,7 +44,7 @@ type DaySlot = {
 
 const days: Array<TimeSlot["day"]> = ["su", "mo", "tu", "we", "th", "fr", "sa"];
 
-export default function NewAppointmentPage() {
+export default function SelectNewAppointmentPage() {
     const [date, setDate] = useState(new Date());
     const [medics, setMedics] = useState<string[]>([]);
     const [specialties, setSpecialties] = useState<number[]>([]);
