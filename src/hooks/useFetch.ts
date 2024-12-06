@@ -1,9 +1,10 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAuth } from "./useAuth";
 
 const apiUrl = "http://localhost:3000/api/v1";
 
-export default function useFetch<T>(endpoint: string): FetchResult<T> {
+export default function useFetch<T>(endpoint: string, params?: Record<string, unknown>): FetchResult<T> {
     const [status, setStatus] = useState<FetchStatus>("loading");
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -17,22 +18,24 @@ export default function useFetch<T>(endpoint: string): FetchResult<T> {
         const url = apiUrl + endpoint;
         console.log(`fetching ${url}`);
 
-        fetch(url, {
-            headers: {
-                authorization: `Bearer ${state.token}`,
-            },
-        })
+        axios
+            .get(url, {
+                headers: {
+                    Authorization: `Bearer ${state.token}`
+                },
+                params,
+            })
             .then(async (response) => {
-                const json = await response.json();
                 if (response.status >= 400) {
-                    setError(json.message);
+                    const error = new Error();
+                    Object.assign(error, { response });
                     setStatus("failed");
-                    return;
+                    throw error;
                 }
 
-                console.log(url, ":", json);
+                console.log(url, ":", response.data);
 
-                setData(json);
+                setData(response.data);
                 setStatus("success");
             })
             .catch((error) => {
@@ -46,7 +49,7 @@ export default function useFetch<T>(endpoint: string): FetchResult<T> {
             });
 
         return () => abortController.abort();
-    }, [endpoint]);
+    }, [endpoint, params]);
 
     const handleCancelRequest = () => {
         if (controller) {
