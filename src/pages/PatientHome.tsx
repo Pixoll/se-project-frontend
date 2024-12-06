@@ -135,7 +135,7 @@ export default function PatientHome() {
                         {selectedDayAppointments.length > 0 ? selectedDayAppointments.map((appointment) => (
                             <PatientSlotAppointmentItem
                                 key={appointment.id}
-                                appointment={appointment}
+                                slot={appointment}
                                 handleCancelAppointment={handleCancelAppointment}
                             />
                         )) : <p className="no-appointment">Sin citas</p>}

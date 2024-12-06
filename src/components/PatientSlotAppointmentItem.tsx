@@ -16,24 +16,24 @@ type Medic = {
 };
 
 type PatientSlotAppointmentItemProps = {
-    appointment: Appointment;
+    slot: Appointment;
     handleCancelAppointment: (id: string) => void;
 }
 
-export default function PatientSlotAppointmentItem({ appointment, handleCancelAppointment }: PatientSlotAppointmentItemProps) {
+export default function PatientSlotAppointmentItem({ slot, handleCancelAppointment }: PatientSlotAppointmentItemProps) {
     return (
-        <li key={appointment.id} className="time-slot">
-            <div className="time-slot-header">{appointment.slot}</div>
+        <li key={slot.id} className="time-slot">
+            <div className="time-slot-header">{slot.slot}</div>
             <div className="time-slot-content">
                 <div className="appointment-details">
                     <p>
-                        <b>Médico:</b> {appointment.medic.fullName} (<em>Rut: {appointment.medic.rut}</em>)
+                        <b>Médico:</b> {slot.medic.fullName} (<em>Rut: {slot.medic.rut}</em>)
                     </p>
-                    <p><b>Especialidad:</b> {appointment.medic.specialty}</p>
-                    <p><b>Estado:</b> {appointment.confirmed ? "Confirmado" : "Por confirmar"}</p>
-                    {!appointment.confirmed && (
+                    <p><b>Especialidad:</b> {slot.medic.specialty}</p>
+                    <p><b>Estado:</b> {slot.confirmed ? "Confirmado" : "Por confirmar"}</p>
+                    {!slot.confirmed && (
                         <button className="cancel-button"
-                                onClick={() => handleCancelAppointment(appointment.id)}>
+                                onClick={() => handleCancelAppointment(slot.id)}>
                             Cancelar Cita
                         </button>
                     )}

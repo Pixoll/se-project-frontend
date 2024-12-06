@@ -4,7 +4,7 @@ import { useAuth } from "./useAuth";
 
 export const apiUrl = "http://localhost:3000/api/v1";
 
-export default function useFetch<T>(endpoint: string, params?: Record<string, unknown>): FetchResult<T> {
+export default function useFetch<T>(endpoint: string): FetchResult<T> {
     const [counter, setCounter] = useState(0);
     const [status, setStatus] = useState<FetchStatus>("loading");
     const [data, setData] = useState<T | null>(null);
@@ -24,7 +24,6 @@ export default function useFetch<T>(endpoint: string, params?: Record<string, un
                 headers: {
                     Authorization: `Bearer ${state.token}`
                 },
-                params,
             })
             .then((response) => {
                 if (response.status >= 400) {
@@ -50,7 +49,7 @@ export default function useFetch<T>(endpoint: string, params?: Record<string, un
             });
 
         return () => abortController.abort();
-    }, [endpoint, params, state.token, counter]);
+    }, [endpoint, state.token, counter]);
 
     const handleCancelRequest = () => {
         if (controller) {
