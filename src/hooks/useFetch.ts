@@ -2,9 +2,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAuth } from "./useAuth";
 
-const apiUrl = "http://localhost:3000/api/v1";
+export const apiUrl = "http://localhost:3000/api/v1";
 
 export default function useFetch<T>(endpoint: string, params?: Record<string, unknown>): FetchResult<T> {
+    const [counter, setCounter] = useState(0);
     const [status, setStatus] = useState<FetchStatus>("loading");
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -25,7 +26,7 @@ export default function useFetch<T>(endpoint: string, params?: Record<string, un
                 },
                 params,
             })
-            .then(async (response) => {
+            .then((response) => {
                 if (response.status >= 400) {
                     const error = new Error();
                     Object.assign(error, { response });
@@ -49,7 +50,7 @@ export default function useFetch<T>(endpoint: string, params?: Record<string, un
             });
 
         return () => abortController.abort();
-    }, [endpoint, params, state.token]);
+    }, [endpoint, params, state.token, counter]);
 
     const handleCancelRequest = () => {
         if (controller) {
@@ -58,13 +59,15 @@ export default function useFetch<T>(endpoint: string, params?: Record<string, un
         }
     };
 
+    const reload = () => setCounter(x => x + 1);
+
     switch (status) {
         case "loading":
             return { status, handleCancelRequest };
         case "success":
-            return { status, data: data! };
+            return { status, data: data!, reload };
         case "failed":
-            return { status, error: error! };
+            return { status, error: error!, reload };
     }
 }
 
@@ -78,11 +81,13 @@ type FetchInProgress = {
 type FetchSuccess<T> = {
     status: "success";
     data: T;
+    reload: () => void;
 };
 
 type FetchFailed = {
     status: "failed";
     error: string;
+    reload: () => void;
 };
 
 type FetchResult<T> = FetchInProgress | FetchSuccess<T> | FetchFailed;

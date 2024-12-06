@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TokenType } from "../context/AuthContext";
 import { useAuth } from "../hooks/useAuth";
+import { apiUrl } from "../hooks/useFetch";
 import useForm from "../hooks/useForm";
 
 type LoginFormProps = {
@@ -32,7 +33,7 @@ export default function LoginForm({ type, redirectTo }: LoginFormProps) {
         setUserDoesNotExist(false);
 
         axios
-            .post(`http://localhost:3000/api/v1/${type}s/${formState.rut}/session`, {
+            .post(`${apiUrl}/${type}s/${formState.rut}/session`, {
                 password: formState.password,
             })
             .then((response) => {
