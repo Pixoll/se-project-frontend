@@ -39,6 +39,10 @@ export default function PatientHome() {
     const appointmentsFetchResult = useFetch<Appointment[]>(`/patients/${state.rut}/appointments`);
     const medicsFetchResult = useFetch<Medic[]>("/medics");
 
+    if (state.type !== "patient") {
+        return <div>No es paciente.</div>;
+    }
+
     if (appointmentsFetchResult.status === "loading" || medicsFetchResult.status === "loading") {
         return <div>Loading...</div>;
     }
