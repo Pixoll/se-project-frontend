@@ -9,7 +9,7 @@ import AdminPage from "./pages/AdminPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import HomePage from "./pages/HomePage";
 import PatientLoginPage from "./pages/PatientLoginPage";
-import SchedulePage from "./pages/SchedulePage";
+import MedicSchedulePage from "./pages/MedicSchedulePage";
 
 export default function App() {
     return (
@@ -24,7 +24,7 @@ export default function App() {
                 <Route path="/medic/browser" element={<MedicPage/>}/>
                 <Route path="/medic/login" element={<MedicLoginPage/>}/>
                 <Route path="/medic/calendar" element={<CalendarPage/>}/>
-                <Route path="/medic/schedule" element={<SchedulePage/>}/>
+                <Route path="/medic/schedule" element={<MedicSchedulePage/>}/>
             </Routes>
         </AuthProvider>
     );
