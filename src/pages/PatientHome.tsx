@@ -3,6 +3,7 @@ import { useState } from "react";
 import Calendar, { TileClassNameFunc } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/PatientHome.css";
+import { BackButton } from "../components/BackButton";
 import PatientAppointmentItem from "../components/PatientAppointmentItem";
 import PatientSlotAppointmentItem from "../components/PatientSlotAppointmentItem";
 import { useAuth } from "../hooks/useAuth";
@@ -105,6 +106,7 @@ export default function PatientHome() {
 
     return (
         <div className="scheduled-appointments">
+            <BackButton/>
             <h1 className="welcome">Tus citas agendadas</h1>
             <div className="calendar-and-schedule">
                 <div className={"appointment-list-container"}>
