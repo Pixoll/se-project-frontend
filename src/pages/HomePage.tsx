@@ -3,7 +3,7 @@ import "../styles/HomePage.css";
 import { useAuth } from "../hooks/useAuth";
 
 export default function HomePage() {
-    const { state } = useAuth();
+    const { state, logout } = useAuth();
 
     return (
         <div className="home-page">
@@ -23,6 +23,11 @@ export default function HomePage() {
                     ? <NavButton text="Ir a panel Especialista" to="/medic/home"/>
                     : <NavButton text="Ingresar como Especialista" to="/medic/login"/>}
             </div>
+            {state.isAuthenticated && (
+                <button className={"logout-button"} onClick={logout}>
+                    Cerrar sesión
+                </button>
+            )}
         </div>
     );
 }

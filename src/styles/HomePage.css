@@ -49,3 +49,30 @@
     text-align: center;
     font-family: "Codec Pro", serif;
 }
+
+.logout-button {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    margin-top: 0;
+    background-color: transparent;
+    color: #336793;
+    border: 2px solid #336793;
+    font-size: 20px;
+    padding: 1em;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-family: "Migra", sans-serif;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #336793;
+    color: white;
+    transform: scale(1.05);
+}
+
+.logout-button:focus {
+    box-shadow: 0 0 5px rgba(6, 7, 8, 0.5);
+}
