@@ -3,6 +3,8 @@ import { useState } from "react";
 import Calendar, { TileClassNameFunc } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/PatientHome.css";
+import PatientAppointmentItem from "../components/PatientAppointmentItem";
+import PatientSlotAppointmentItem from "../components/PatientSlotAppointmentItem";
 import { useAuth } from "../hooks/useAuth";
 import useFetch, { apiUrl } from "../hooks/useFetch";
 
@@ -109,24 +111,11 @@ export default function PatientHome() {
                     <h2 className={"sub-welcome"}>Lista de citas</h2>
                     <ul>
                         {appointments.map(appointment => (
-                            <li key={appointment.id} className={"appointment"}>
-                                <p><b>Fecha:</b> {appointment.date}</p>
-                                <p><b>Horario:</b> {appointment.slot}</p>
-                                <p>
-                                    <b>Médico:</b>
-                                    {appointment.medic.fullName} (<em>Rut: {appointment.medic.rut}</em>)
-                                </p>
-                                <p><b>Especialidad:</b> {appointment.medic.specialty}</p>
-                                <p><b>Estado:</b> {appointment.confirmed ? "Confirmado" : "Por confirmar"}</p>
-                                {!appointment.confirmed && <>
-                                    <button
-                                        className={"cancel-button"}
-                                        onClick={() => handleCancelAppointment(appointment.id)}
-                                    >
-                                        Cancelar cita
-                                    </button>
-                                </>}
-                            </li>
+                            <PatientAppointmentItem
+                                key={appointment.id}
+                                appointment={appointment}
+                                handleCancelAppointment={handleCancelAppointment}
+                            />
                         ))}
                     </ul>
                 </div>
@@ -141,24 +130,11 @@ export default function PatientHome() {
                     <h2 className="sub-welcome">Horario {date.toLocaleDateString()}</h2>
                     <ul className="time-slots">
                         {selectedDayAppointments.length > 0 ? selectedDayAppointments.map((appointment) => (
-                            <li key={appointment.id} className="time-slot">
-                                <div className="time-slot-header">{appointment.slot}</div>
-                                <div className="time-slot-content">
-                                    <div className="appointment-details">
-                                        <p>
-                                            <b>Médico:</b> {appointment.medic.fullName} (<em>Rut: {appointment.medic.rut}</em>)
-                                        </p>
-                                        <p><b>Especialidad:</b> {appointment.medic.specialty}</p>
-                                        <p><b>Estado:</b> {appointment.confirmed ? "Confirmado" : "Por confirmar"}</p>
-                                        {!appointment.confirmed && (
-                                            <button className="cancel-button"
-                                                    onClick={() => handleCancelAppointment(appointment.id)}>
-                                                Cancelar Cita
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            </li>
+                            <PatientSlotAppointmentItem
+                                key={appointment.id}
+                                appointment={appointment}
+                                handleCancelAppointment={handleCancelAppointment}
+                            />
                         )) : <p className="no-appointment">Sin citas</p>}
                     </ul>
                 </div>
