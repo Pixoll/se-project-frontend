@@ -39,24 +39,10 @@ type GroupedTimeSlots = {
     slots: TimeSlot[];
 };
 
-type DaySlot = {
-    id: number;
-    rut: string;
-    fullName: string;
-    specialty: string;
-    start: string;
-    end: string;
-};
-
-const days: Array<TimeSlot["day"]> = ["su", "mo", "tu", "we", "th", "fr", "sa"];
-
 export default function AdminPage() {
     const { state } = useAuth();
     const [date, setDate] = useState<Date>(new Date());
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
-    const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState<number | null>(null);
-    const [newDate, setNewDate] = useState<Date>(new Date());
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isPatientModalOpen, setIsPatientModalOpen] = useState<boolean>(false);
     const appointmentsFetchResult = useFetch<Appointment[]>("/appointments");
     const scheduleFetchResult = useFetch<GroupedTimeSlots[]>("/schedule");
@@ -76,28 +62,6 @@ export default function AdminPage() {
     }
 
     const appointments = appointmentsFetchResult.data;
-    const dateString = toDateString(date);
-    const dayName = days[date.getDay()];
-    const daySlots: DaySlot[] = [];
-
-    scheduleFetchResult.data.forEach(group => {
-        group.slots.forEach(slot => {
-            if (
-                slot.day !== dayName
-                || slot.appointmentDates.includes(dateString)
-                || new Date(`${dateString} ${slot.start}`).getTime() <= Date.now()
-            ) return;
-
-            daySlots.push({
-                id: slot.id,
-                rut: group.rut,
-                fullName: group.fullName,
-                specialty: group.specialty,
-                start: slot.start,
-                end: slot.end,
-            });
-        });
-    });
 
     const handleCancelAppointment = (appointment: Appointment) => {
         axios.delete(`${apiUrl}/patients/${appointment.patientRut}/appointments/${appointment.id}`, {
@@ -120,19 +84,19 @@ export default function AdminPage() {
         alert("Cita cancelada");
     };
 
-    const handleRescheduleClick = (id: number) => {
-        setRescheduleAppointmentId(id);
-        setIsModalOpen(true);
-    };
+    // const handleRescheduleClick = (id: number) => {
+    //     setRescheduleAppointmentId(id);
+    //     setIsModalOpen(true);
+    // };
 
-    const handleRescheduleAppointment = () => {
-        // setAppointments(appointments.map(appointment =>
-        //     appointment.id === rescheduleAppointmentId ? { ...appointment, date: newDate } : appointment
-        // ));
-        alert("Cita aplazada a " + newDate.toDateString());
-        setRescheduleAppointmentId(null);
-        setIsModalOpen(false);
-    };
+    // const handleRescheduleAppointment = () => {
+    //     // setAppointments(appointments.map(appointment =>
+    //     //     appointment.id === rescheduleAppointmentId ? { ...appointment, date: newDate } : appointment
+    //     // ));
+    //     alert("Cita aplazada a " + newDate.toDateString());
+    //     setRescheduleAppointmentId(null);
+    //     setIsModalOpen(false);
+    // };
 
     const handleConfirmAppointment = (appointment: Appointment) => {
         axios.patch(`${apiUrl}/patients/${appointment.patientRut}/appointments/${appointment.id}`, {
@@ -231,27 +195,27 @@ export default function AdminPage() {
             </div>
 
             {/* Modal para aplazar citas */}
-            {isModalOpen && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <h3>Selecciona una nueva fecha para aplazar la cita</h3>
-                        <div className="calendar-container">
-                            <Calendar
-                                onChange={(d) => setNewDate(d as Date)}
-                                value={newDate}
-                            />
-                        </div>
-                        <div className="button-container">
-                            <button className="nav-button" onClick={handleRescheduleAppointment}>
-                                Confirmar Nueva Fecha
-                            </button>
-                            <button className="nav-button" onClick={() => setIsModalOpen(false)}>
-                                Cancelar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/*{isModalOpen && (*/}
+            {/*    <div className="modal-overlay">*/}
+            {/*        <div className="modal-content">*/}
+            {/*            <h3>Selecciona una nueva fecha para aplazar la cita</h3>*/}
+            {/*            <div className="calendar-container">*/}
+            {/*                <Calendar*/}
+            {/*                    onChange={(d) => setNewDate(d as Date)}*/}
+            {/*                    value={newDate}*/}
+            {/*                />*/}
+            {/*            </div>*/}
+            {/*            <div className="button-container">*/}
+            {/*                <button className="nav-button" onClick={handleRescheduleAppointment}>*/}
+            {/*                    Confirmar Nueva Fecha*/}
+            {/*                </button>*/}
+            {/*                <button className="nav-button" onClick={() => setIsModalOpen(false)}>*/}
+            {/*                    Cancelar*/}
+            {/*                </button>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*)}*/}
 
             {/*Modal para la ficha del paciente*/}
             {isPatientModalOpen && selectedAppointment && (
