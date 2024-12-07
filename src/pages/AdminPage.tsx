@@ -177,30 +177,34 @@ export default function AdminPage() {
                     <button className="nav-button" onClick={() => viewPatientDetails(appointment)}>
                         Ver Ficha Paciente
                     </button>
-                    {/*<button className="nav-button" onClick={() => handleRescheduleClick(appointment.id)}>*/}
-                    {/*    Aplazar Cita*/}
-                    {/*</button>*/}
-                    <button className="nav-button" onClick={() => handleCancelAppointment(appointment)}>
-                        Cancelar Cita
-                    </button>
-                    <button className="nav-button" onClick={() => handleConfirmAppointment(appointment)}>
-                        Confirmar Cita
-                    </button>
+                    {!appointment.confirmed && <>
+                        {/*<button className="nav-button" onClick={() => handleRescheduleClick(appointment.id)}>*/}
+                        {/*    Aplazar Cita*/}
+                        {/*</button>*/}
+                        <button className="nav-button" onClick={() => handleCancelAppointment(appointment)}>
+                            Cancelar Cita
+                        </button>
+                        <button className="nav-button" onClick={() => handleConfirmAppointment(appointment)}>
+                            Confirmar Cita
+                        </button>
+                    </>}
                 </div>
             ));
     };
 
     const tileClassName: TileClassNameFunc = ({ date, view }) => {
         if (view === "month") {
-            const hasConfirmedAppointment = appointments.some(appointment =>
-                appointment.date === toDateString(date) && appointment.confirmed
-            );
+            const filtered = appointments
+                .filter(appointment => appointment.date === toDateString(date));
+            const hasAppointment = filtered.length > 0;
+
+            const hasConfirmedAppointment = hasAppointment && filtered
+                .every(appointment => appointment.confirmed);
+
             if (hasConfirmedAppointment) {
                 return "confirmed-day";
             }
-            const hasAppointment = appointments.some(appointment =>
-                appointment.date === toDateString(date)
-            );
+
             return hasAppointment ? "highlighted-day" : null;
         }
         return null;
