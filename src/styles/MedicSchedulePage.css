@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
-    margin-bottom: 100px;
+    padding-bottom: 100px;
 }
 
 .day-column {
@@ -23,6 +23,11 @@
 .time-slot.selected {
     background-color: #4caf50;
     color: white;
+}
+
+.time-slot.locked {
+    background-color: gold;
+    color: black;
 }
 
 .save-changes-button {
