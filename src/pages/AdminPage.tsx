@@ -24,41 +24,23 @@ type Appointment = {
     confirmed: boolean;
 };
 
-type TimeSlot = {
-    id: number;
-    day: "mo" | "tu" | "we" | "th" | "fr" | "sa" | "su";
-    start: string;
-    end: string;
-    appointmentDates: string[];
-};
-
-type GroupedTimeSlots = {
-    rut: string;
-    fullName: string;
-    specialty: string;
-    slots: TimeSlot[];
-};
-
 export default function AdminPage() {
     const { state } = useAuth();
     const [date, setDate] = useState<Date>(new Date());
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
     const [isPatientModalOpen, setIsPatientModalOpen] = useState<boolean>(false);
     const appointmentsFetchResult = useFetch<Appointment[]>("/appointments");
-    const scheduleFetchResult = useFetch<GroupedTimeSlots[]>("/schedule");
 
     if (state.type !== "admin") {
         return <div>No es administrador.</div>;
     }
 
-    if (appointmentsFetchResult.status === "loading" || scheduleFetchResult.status === "loading") {
+    if (appointmentsFetchResult.status === "loading") {
         return <div>Loading...</div>;
     }
 
-    if (appointmentsFetchResult.status === "failed" || scheduleFetchResult.status === "failed") {
-        // @ts-ignore
-        const message = appointmentsFetchResult.error ?? scheduleFetchResult.error;
-        return <div>Error: {message}</div>;
+    if (appointmentsFetchResult.status === "failed") {
+        return <div>Error: {appointmentsFetchResult.error}</div>;
     }
 
     const appointments = appointmentsFetchResult.data;
