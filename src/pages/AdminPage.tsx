@@ -1,51 +1,122 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useState } from "react";
 import Calendar, { TileClassNameFunc } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/AdminPage.css";
+import { BackButton } from "../components/BackButton";
+import { useAuth } from "../hooks/useAuth";
+import useFetch, { apiUrl } from "../hooks/useFetch";
 
 type Appointment = {
-    id: number;
-    date: Date;
-    specialist: string;
-    patient: {
-        name: string;
-        id: string;
-        details: string;
-    },
+    id: string;
+    medicRut: string;
+    medicFullName: string;
+    patientRut: string;
+    patientFullName: string;
+    patientBirthDate: string;
+    patientEmail: string;
+    patientPhone: number;
+    date: string;
+    slotId: number;
+    start: string;
+    end: string;
+    description: string;
     confirmed: boolean;
-}
+};
+
+type TimeSlot = {
+    id: number;
+    day: "mo" | "tu" | "we" | "th" | "fr" | "sa" | "su";
+    start: string;
+    end: string;
+    appointmentDates: string[];
+};
+
+type GroupedTimeSlots = {
+    rut: string;
+    fullName: string;
+    specialty: string;
+    slots: TimeSlot[];
+};
+
+type DaySlot = {
+    id: number;
+    rut: string;
+    fullName: string;
+    specialty: string;
+    start: string;
+    end: string;
+};
+
+const days: Array<TimeSlot["day"]> = ["su", "mo", "tu", "we", "th", "fr", "sa"];
 
 export default function AdminPage() {
+    const { state } = useAuth();
     const [date, setDate] = useState<Date>(new Date());
-    const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
     const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState<number | null>(null);
     const [newDate, setNewDate] = useState<Date>(new Date());
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isPatientModalOpen, setIsPatientModalOpen] = useState<boolean>(false);
+    const appointmentsFetchResult = useFetch<Appointment[]>("/appointments");
+    const scheduleFetchResult = useFetch<GroupedTimeSlots[]>("/schedule");
 
-    useEffect(() => {
-        const fetchedAppointments: Appointment[] = [
-            {
-                id: 1,
-                date: new Date(2024, 10, 14, 10, 0),
-                specialist: "Dr. Smith",
-                patient: { name: "Juan Pérez", id: "12.345.679-K", details: "Ficha médica" },
-                confirmed: false
+    if (state.type !== "admin") {
+        return <div>No es administrador.</div>;
+    }
+
+    if (appointmentsFetchResult.status === "loading" || scheduleFetchResult.status === "loading") {
+        return <div>Loading...</div>;
+    }
+
+    if (appointmentsFetchResult.status === "failed" || scheduleFetchResult.status === "failed") {
+        // @ts-ignore
+        const message = appointmentsFetchResult.error ?? scheduleFetchResult.error;
+        return <div>Error: {message}</div>;
+    }
+
+    const appointments = appointmentsFetchResult.data;
+    const dateString = toDateString(date);
+    const dayName = days[date.getDay()];
+    const daySlots: DaySlot[] = [];
+
+    scheduleFetchResult.data.forEach(group => {
+        group.slots.forEach(slot => {
+            if (
+                slot.day !== dayName
+                || slot.appointmentDates.includes(dateString)
+                || new Date(`${dateString} ${slot.start}`).getTime() <= Date.now()
+            ) return;
+
+            daySlots.push({
+                id: slot.id,
+                rut: group.rut,
+                fullName: group.fullName,
+                specialty: group.specialty,
+                start: slot.start,
+                end: slot.end,
+            });
+        });
+    });
+
+    const handleCancelAppointment = (appointment: Appointment) => {
+        axios.delete(`${apiUrl}/patients/${appointment.patientRut}/appointments/${appointment.id}`, {
+            headers: {
+                Authorization: `Bearer ${state.token}`
             },
-            {
-                id: 2,
-                date: new Date(2024, 10, 15, 12, 0),
-                specialist: "Dr. Williams",
-                patient: { name: "Ana Gómez", id: "87.654.321-0", details: "Ficha médica" },
-                confirmed: false
+        }).then(response => {
+            if (response.status >= 400) {
+                const error = new Error();
+                Object.assign(error, { response });
+                throw error;
             }
-        ];
-        setAppointments(fetchedAppointments);
-    }, []);
 
-    const handleCancelAppointment = (id: number) => {
-        setAppointments(appointments.filter(appointment => appointment.id !== id));
+            appointmentsFetchResult.reload();
+            alert("Cita cancelada");
+        }).catch((error) => {
+            const message = error instanceof Error ? error.message : `${error}`;
+            alert(`No se pudo cancelar la cita: ${message}`);
+        });
         alert("Cita cancelada");
     };
 
@@ -55,19 +126,34 @@ export default function AdminPage() {
     };
 
     const handleRescheduleAppointment = () => {
-        setAppointments(appointments.map(appointment =>
-            appointment.id === rescheduleAppointmentId ? { ...appointment, date: newDate } : appointment
-        ));
+        // setAppointments(appointments.map(appointment =>
+        //     appointment.id === rescheduleAppointmentId ? { ...appointment, date: newDate } : appointment
+        // ));
         alert("Cita aplazada a " + newDate.toDateString());
         setRescheduleAppointmentId(null);
         setIsModalOpen(false);
     };
 
-    const handleConfirmAppointment = (id: number) => {
-        alert("Cita confirmada");
-        setAppointments(appointments.map(appointment =>
-            appointment.id === id ? { ...appointment, confirmed: true } : appointment
-        ));
+    const handleConfirmAppointment = (appointment: Appointment) => {
+        axios.patch(`${apiUrl}/patients/${appointment.patientRut}/appointments/${appointment.id}`, {
+            confirmed: true,
+        }, {
+            headers: {
+                Authorization: `Bearer ${state.token}`
+            },
+        }).then(response => {
+            if (response.status >= 400) {
+                const error = new Error();
+                Object.assign(error, { response });
+                throw error;
+            }
+
+            appointmentsFetchResult.reload();
+            alert("Cita confirmada");
+        }).catch((error) => {
+            const message = error instanceof Error ? error.message : `${error}`;
+            alert(`No se pudo confirmada la cita: ${message}`);
+        });
     };
 
     const viewPatientDetails = (appointment: Appointment) => {
@@ -82,24 +168,23 @@ export default function AdminPage() {
 
     const renderAppointments = () => {
         return appointments
-            .filter(appointment => appointment.date.toDateString() === date.toDateString())
+            .filter(appointment => appointment.date === toDateString(date))
             .map(appointment => (
                 <div key={appointment.id} className="appointment">
-                    <p>Cita a las {appointment.date.getHours()}:00 con {appointment.specialist}</p>
-                    <p>Paciente: {appointment.patient.name}</p>
+                    <p>Cita a las {appointment.start} con {appointment.medicFullName}</p>
+                    <p>Paciente: {appointment.patientFullName}</p>
+                    <p>Descripción: {appointment.description}</p>
                     <button className="nav-button" onClick={() => viewPatientDetails(appointment)}>
                         Ver Ficha Paciente
                     </button>
-                    <button className="nav-button" onClick={() => handleRescheduleClick(appointment.id)}>
-                        Aplazar Cita
+                    {/*<button className="nav-button" onClick={() => handleRescheduleClick(appointment.id)}>*/}
+                    {/*    Aplazar Cita*/}
+                    {/*</button>*/}
+                    <button className="nav-button" onClick={() => handleCancelAppointment(appointment)}>
+                        Cancelar Cita
                     </button>
-                    <button className="nav-button" onClick={() => handleCancelAppointment(appointment.id)}>
-                        Cancelar
-                        Cita
-                    </button>
-                    <button className="nav-button" onClick={() => handleConfirmAppointment(appointment.id)}>
-                        Confirmar
-                        Cita
+                    <button className="nav-button" onClick={() => handleConfirmAppointment(appointment)}>
+                        Confirmar Cita
                     </button>
                 </div>
             ));
@@ -108,13 +193,13 @@ export default function AdminPage() {
     const tileClassName: TileClassNameFunc = ({ date, view }) => {
         if (view === "month") {
             const hasConfirmedAppointment = appointments.some(appointment =>
-                appointment.date.toDateString() === date.toDateString() && appointment.confirmed
+                appointment.date === toDateString(date) && appointment.confirmed
             );
             if (hasConfirmedAppointment) {
                 return "confirmed-day";
             }
             const hasAppointment = appointments.some(appointment =>
-                appointment.date.toDateString() === date.toDateString()
+                appointment.date === toDateString(date)
             );
             return hasAppointment ? "highlighted-day" : null;
         }
@@ -127,6 +212,7 @@ export default function AdminPage() {
 
     return (
         <div className="funcionario-view">
+            <BackButton/>
             <h1 className="welcome">Agenda del Funcionario</h1>
             <div className="calendar-container">
                 <Calendar
@@ -152,9 +238,12 @@ export default function AdminPage() {
                             />
                         </div>
                         <div className="button-container">
-                            <button className="nav-button" onClick={handleRescheduleAppointment}>Confirmar Nueva Fecha
+                            <button className="nav-button" onClick={handleRescheduleAppointment}>
+                                Confirmar Nueva Fecha
                             </button>
-                            <button className="nav-button" onClick={() => setIsModalOpen(false)}>Cancelar</button>
+                            <button className="nav-button" onClick={() => setIsModalOpen(false)}>
+                                Cancelar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -164,9 +253,11 @@ export default function AdminPage() {
             {isPatientModalOpen && selectedAppointment && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                        <h3>Ficha del Paciente: {selectedAppointment.patient.name}</h3>
-                        <p>RUT del paciente: {selectedAppointment.patient.id}</p>
-                        <p>Detalles: {selectedAppointment.patient.details}</p>
+                        <h3>Ficha del Paciente: {selectedAppointment.patientFullName}</h3>
+                        <p>RUT del paciente: {selectedAppointment.patientRut}</p>
+                        <p>Fecha de nacimiento: {selectedAppointment.patientBirthDate}</p>
+                        <p>Correo electrónico: {selectedAppointment.patientEmail}</p>
+                        <p>Teléfono: {selectedAppointment.patientPhone}</p>
                         <div className="button-container">
                             <button className="nav-button" onClick={closePatientModal}>Cerrar Ficha</button>
                         </div>
@@ -177,3 +268,7 @@ export default function AdminPage() {
         </div>
     );
 };
+
+function toDateString(date: Date): string {
+    return date.toLocaleDateString("es-CL").split("-").reverse().join("-");
+}
