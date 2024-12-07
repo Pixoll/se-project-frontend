@@ -1,0 +1,50 @@
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 100px;
+}
+
+.day-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-slot {
+    width: 100px;
+    padding: 5px;
+    margin: 2px 0;
+    text-align: center;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.time-slot.selected {
+    background-color: #4caf50;
+    color: white;
+}
+
+.save-changes-button {
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #336793;
+    font-size: 20px;
+    font-family: Migra, cursive;
+    text-transform: uppercase;
+    padding: 1em;
+    margin: 1em;
+    cursor: pointer;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
+
+.save-changes-button:hover {
+    background-color: #336793;
+    color: white;
+}
+
+.save-changes-button:focus {
+    box-shadow: 0 0 5px rgba(6, 7, 8, 0.5);
+}

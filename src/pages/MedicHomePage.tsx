@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import Calendar, { TileClassNameFunc } from "react-calendar";
 import { BackButton } from "../components/BackButton";
+import { NavButton } from "../components/NavButton";
 import { useAuth } from "../hooks/useAuth";
 import useFetch, { apiUrl } from "../hooks/useFetch";
 
@@ -134,6 +135,12 @@ export default function MedicHomePage() {
     return (
         <div className="funcionario-view">
             <BackButton/>
+            <NavButton text={"Editar horario"} to={"/medic/schedule"} style={{
+                position: "fixed",
+                top: "10px",
+                right: "10px",
+                margin: "1em",
+            }}/>
             <h1 className="welcome">Agenda del médico</h1>
             <div className="calendar-container">
                 <Calendar
