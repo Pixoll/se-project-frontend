@@ -30,6 +30,16 @@
     color: black;
 }
 
+.time-slot.saved {
+    background-color: #336793;
+    color: white;
+}
+
+.time-slot.saved.locked {
+    background-color: gold;
+    color: black;
+}
+
 .save-changes-button {
     background-color: transparent;
     color: #333;

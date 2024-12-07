@@ -26,6 +26,12 @@ type TimeSlot = {
     appointments: Appointment[];
 };
 
+type SelectedSlot = {
+    isLocked: boolean;
+    isSaved: boolean;
+    isSelected: boolean;
+};
+
 const daysOfWeek: Day[] = [
     { code: "mo", name: "Lunes" },
     { code: "tu", name: "Martes" },
@@ -44,7 +50,7 @@ const timeSlots = Array.from({ length: 28 }, (_, i) => {
 
 export default function MedicSchedulePage() {
     const { state } = useAuth();
-    const [selectedSlots, setSelectedSlots] = useState<Map<string, { isLocked: boolean }>>(new Map());
+    const [selectedSlots, setSelectedSlots] = useState<Map<string, SelectedSlot>>(new Map());
     const scheduleFetchResult = useFetch<TimeSlot[]>(`/medics/${state.rut}/schedule`);
 
     if (state.type !== "medic") {
@@ -67,12 +73,15 @@ export default function MedicSchedulePage() {
     }));
 
     schedule.forEach(slot => {
-        if (slot.hasAppointments) {
-            selectedSlots.set(`${slot.day}-${slot.time}`, { isLocked: true });
+        const key = `${slot.day}-${slot.time}`;
+        if (!selectedSlots.has(key)) {
+            selectedSlots.set(key, {
+                isLocked: slot.hasAppointments,
+                isSaved: true,
+                isSelected: true,
+            });
         }
     });
-
-    console.log(schedule, selectedSlots);
 
     const handleSlotClick = (day: string, time: string) => {
         const slot = `${day}-${time}`;
@@ -84,10 +93,20 @@ export default function MedicSchedulePage() {
 
         setSelectedSlots(prev => {
             const newSlots = new Map(prev);
-            if (newSlots.has(slot)) {
-                newSlots.delete(slot);
+            const currentSlot = newSlots.get(slot);
+            if (currentSlot) {
+                if (!currentSlot.isLocked) {
+                    newSlots.set(slot, {
+                        ...currentSlot,
+                        isSelected: !currentSlot.isSelected,
+                    });
+                }
             } else {
-                newSlots.set(slot, { isLocked: false });
+                newSlots.set(slot, {
+                    isLocked: false,
+                    isSaved: false,
+                    isSelected: true,
+                });
             }
             return newSlots;
         });
@@ -108,12 +127,22 @@ export default function MedicSchedulePage() {
                             const slotKey = `${day.code}-${time}`;
                             const slotInfo = selectedSlots.get(slotKey);
                             const isLocked = slotInfo?.isLocked ?? false;
+                            const isSaved = slotInfo?.isSaved ?? false;
+                            const isSelected = slotInfo?.isSelected ?? false;
                             return (
                                 <div
                                     key={time}
-                                    className={`time-slot ${slotInfo ? "selected" : ""} ${isLocked ? "locked" : ""}`}
+                                    className={
+                                        `time-slot ${
+                                            isSelected ? "selected" : ""} ${
+                                            isLocked ? "locked" : ""} ${
+                                            isSelected && isSaved ? "saved" : ""}`}
                                     onClick={() => handleSlotClick(day.code, time)}
-                                    title={isLocked ? "Este slot tiene citas agendadas y no puede ser eliminado" : ""}
+                                    title={isLocked
+                                        ? "Este slot tiene citas agendadas y no puede ser eliminado"
+                                        : isSaved
+                                            ? "Este slot ya estaba registrado en tu horario"
+                                            : ""}
                                 >
                                     {time} {isLocked && <span>&#9733;</span>}
                                 </div>
