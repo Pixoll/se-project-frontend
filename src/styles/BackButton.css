@@ -16,7 +16,7 @@
     margin: 1em;
     top: 10px;
     left: 10px;
-    position: fixed;
+    position: absolute;
     cursor: pointer;
 }
 

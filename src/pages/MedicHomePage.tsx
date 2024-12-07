@@ -136,7 +136,7 @@ export default function MedicHomePage() {
         <div className="funcionario-view">
             <BackButton/>
             <NavButton text={"Editar horario"} to={"/medic/schedule"} style={{
-                position: "fixed",
+                position: "absolute",
                 top: "10px",
                 right: "10px",
                 margin: "1em",

@@ -143,7 +143,7 @@ export default function PatientHome() {
                 </div>
             </div>
             <NavButton text={"Agendar nueva cita"} to={"/new-appointment"} style={{
-                position: "fixed",
+                position: "absolute",
                 left: "50%",
                 bottom: "10%",
                 transform: "translateX(-50%)",
