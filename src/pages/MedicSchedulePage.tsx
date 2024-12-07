@@ -141,7 +141,7 @@ export default function MedicSchedulePage() {
                                     title={isLocked
                                         ? "Este slot tiene citas agendadas y no puede ser eliminado"
                                         : isSaved
-                                            ? "Este slot ya estaba registrado en tu horario"
+                                            ? "Este slot no tiene citas agendadas y si puede ser eliminado"
                                             : ""}
                                 >
                                     {time} {isLocked && <span>&#9733;</span>}
