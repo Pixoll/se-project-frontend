@@ -28,7 +28,6 @@ export default function AdminPage() {
     const { state } = useAuth();
     const [date, setDate] = useState<Date>(new Date());
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
-    const [isPatientModalOpen, setIsPatientModalOpen] = useState<boolean>(false);
     const appointmentsFetchResult = useFetch<Appointment[]>("/appointments");
 
     if (state.type !== "admin") {
@@ -104,12 +103,10 @@ export default function AdminPage() {
 
     const viewPatientDetails = (appointment: Appointment) => {
         setSelectedAppointment(appointment);
-        setIsPatientModalOpen(true);
     };
 
     const closePatientModal = () => {
         setSelectedAppointment(null);
-        setIsPatientModalOpen(false);
     };
 
     const renderAppointments = () => {
@@ -200,7 +197,7 @@ export default function AdminPage() {
             {/*)}*/}
 
             {/*Modal para la ficha del paciente*/}
-            {isPatientModalOpen && selectedAppointment && (
+            {selectedAppointment && (
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <h3>Ficha del Paciente: {selectedAppointment.patientFullName}</h3>

@@ -23,7 +23,6 @@ export default function MedicHomePage() {
     const { state } = useAuth();
     const [date, setDate] = useState<Date>(new Date());
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
-    const [isPatientModalOpen, setIsPatientModalOpen] = useState<boolean>(false);
     const appointmentsFetchResult = useFetch<Appointment[]>(`/medics/${state.rut}/appointments`);
 
     if (state.type !== "medic") {
@@ -40,8 +39,8 @@ export default function MedicHomePage() {
 
     const appointments = appointmentsFetchResult.data;
 
-    const handleCancelAppointment = (appointment: Appointment) => {
-        axios.delete(`${apiUrl}/patients/${appointment.patientRut}/appointments/${appointment.id}`, {
+    const handleCancelAppointment = (id: string) => {
+        axios.delete(`${apiUrl}/medics/${state.rut}/appointments/${id}`, {
             headers: {
                 Authorization: `Bearer ${state.token}`
             },
@@ -61,8 +60,8 @@ export default function MedicHomePage() {
         alert("Cita cancelada");
     };
 
-    const handleConfirmAppointment = (appointment: Appointment) => {
-        axios.patch(`${apiUrl}/patients/${appointment.patientRut}/appointments/${appointment.id}`, {
+    const handleConfirmAppointment = (id: string) => {
+        axios.patch(`${apiUrl}/medics/${state.rut}/appointments/${id}`, {
             confirmed: true,
         }, {
             headers: {
@@ -85,12 +84,10 @@ export default function MedicHomePage() {
 
     const viewPatientDetails = (appointment: Appointment) => {
         setSelectedAppointment(appointment);
-        setIsPatientModalOpen(true);
     };
 
     const closePatientModal = () => {
         setSelectedAppointment(null);
-        setIsPatientModalOpen(false);
     };
 
     const renderAppointments = () => {
@@ -105,10 +102,10 @@ export default function MedicHomePage() {
                         Ver Ficha Paciente
                     </button>
                     {!appointment.confirmed && <>
-                        <button className="nav-button" onClick={() => handleCancelAppointment(appointment)}>
+                        <button className="nav-button" onClick={() => handleCancelAppointment(appointment.id)}>
                             Cancelar Cita
                         </button>
-                        <button className="nav-button" onClick={() => handleConfirmAppointment(appointment)}>
+                        <button className="nav-button" onClick={() => handleConfirmAppointment(appointment.id)}>
                             Confirmar Cita
                         </button>
                     </>}
@@ -150,7 +147,7 @@ export default function MedicHomePage() {
                 {renderAppointments()}
             </div>
 
-            {isPatientModalOpen && selectedAppointment && (
+            {selectedAppointment && (
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <h3>Ficha del Paciente: {selectedAppointment.patientFullName}</h3>
