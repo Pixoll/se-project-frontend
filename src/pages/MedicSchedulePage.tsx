@@ -1,8 +1,9 @@
+import axios from "axios";
 import { useState } from "react";
 import { BackButton } from "../components/BackButton";
 import { useAuth } from "../hooks/useAuth";
 import "../styles/MedicSchedulePage.css";
-import useFetch from "../hooks/useFetch";
+import useFetch, { apiUrl } from "../hooks/useFetch";
 
 type Day = {
     code: "mo" | "tu" | "we" | "th" | "fr" | "sa" | "su";
@@ -30,6 +31,13 @@ type SelectedSlot = {
     isLocked: boolean;
     isSaved: boolean;
     isSelected: boolean;
+    id?: number;
+};
+
+type NewSlot = {
+    day: "mo" | "tu" | "we" | "th" | "fr" | "sa" | "su";
+    start: string;
+    end: string;
 };
 
 const daysOfWeek: Day[] = [
@@ -76,12 +84,78 @@ export default function MedicSchedulePage() {
         const key = `${slot.day}-${slot.time}`;
         if (!selectedSlots.has(key)) {
             selectedSlots.set(key, {
+                id: slot.id,
                 isLocked: slot.hasAppointments,
                 isSaved: true,
                 isSelected: true,
             });
         }
     });
+
+    const onSaveChanges = () => {
+        const newSlots: NewSlot[] = [];
+        const removedSlots = new Map<number, SelectedSlot & { key: string }>();
+
+        for (const [key, slot] of selectedSlots) {
+            if (slot.isLocked || (slot.isSaved && slot.isSelected)) {
+                continue;
+            }
+
+            if (slot.isSelected) {
+                const [day, start] = key.split("-") as [TimeSlot["day"], string];
+                const [hours, minutes] = start.split(":");
+                const end = `${minutes === "30" ? +hours + 1 : hours}:${+minutes + 30}`;
+                newSlots.push({ day, start, end });
+            }
+
+            if (slot.isSaved && !slot.isSelected) {
+                removedSlots.set(slot.id!, { ...slot, key });
+            }
+        }
+
+        if (newSlots.length > 0) {
+            scheduleFetchResult.reload();
+            axios.post(`${apiUrl}/medics/${state.rut}/schedule/slots`, newSlots, {
+                headers: {
+                    Authorization: `Bearer ${state.token}`
+                },
+            }).then(response => {
+                if (response.status >= 400) {
+                    const error = new Error();
+                    Object.assign(error, { response });
+                    throw error;
+                }
+                console.log("saved slots", newSlots);
+            }).catch((error) => {
+                const message = error instanceof Error ? error.message : `${error}`;
+                alert(`No se pudo guardar los nuevos slots: ${message}`);
+            });
+        }
+
+        if (removedSlots.size > 0) {
+            scheduleFetchResult.reload();
+            console.log("deleting slots", removedSlots);
+            for (const [id] of removedSlots) {
+                axios.delete(`${apiUrl}/medics/${state.rut}/schedule/slots/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${state.token}`
+                    },
+                }).then(response => {
+                    if (response.status >= 400) {
+                        const error = new Error();
+                        Object.assign(error, { response });
+                        throw error;
+                    }
+                    console.log(`deleted slot ${id}`);
+                }).catch((error) => {
+                    const message = error instanceof Error ? error.message : `${error}`;
+                    alert(`No se pudo eliminar el slot ${id}: ${message}`);
+                });
+            }
+        }
+
+        alert("Cambios guardados");
+    };
 
     const handleSlotClick = (day: string, time: string) => {
         const slot = `${day}-${time}`;
@@ -115,7 +189,7 @@ export default function MedicSchedulePage() {
     return (
         <div>
             <BackButton/>
-            <button className={"save-changes-button"}>
+            <button className={"save-changes-button"} onClick={onSaveChanges}>
                 Guardar cambios
             </button>
             <h1 className="welcome">Modificar horario</h1>
