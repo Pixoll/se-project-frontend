@@ -2,11 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import AuthProvider from "./context/AuthContext";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminPage from "./pages/AdminPage";
-import CalendarPage from "./pages/CalendarPage";
 import HomePage from "./pages/HomePage";
 import MedicHomePage from "./pages/MedicHomePage";
 import MedicLoginPage from "./pages/MedicLoginPage";
-import MedicPage from "./pages/MedicPage";
 import MedicSchedulePage from "./pages/MedicSchedulePage";
 import PatientHome from "./pages/PatientHome";
 import PatientLoginPage from "./pages/PatientLoginPage";
@@ -25,9 +23,7 @@ export default function App() {
                 <Route path="/patient/home" element={<PatientHome/>}/>
                 <Route path="/patient/login" element={<PatientLoginPage/>}/>
                 <Route path="/medic/home" element={<MedicHomePage/>}/>
-                <Route path="/medic/browser" element={<MedicPage/>}/>
                 <Route path="/medic/login" element={<MedicLoginPage/>}/>
-                <Route path="/medic/calendar" element={<CalendarPage/>}/>
                 <Route path="/medic/schedule" element={<MedicSchedulePage/>}/>
             </Routes>
         </AuthProvider>

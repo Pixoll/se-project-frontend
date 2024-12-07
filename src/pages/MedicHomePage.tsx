@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
+import { BackButton } from "../components/BackButton";
 
 export default function MedicHomePage() {
     return (
         <nav>
-            <Link to="/">Inicio</Link>
-            |
-            <Link to="/medic/calendar">Calendario</Link>
-            |
+            <BackButton/>
             <Link to="/medic/schedule">Días de trabajo</Link>
         </nav>
     );
