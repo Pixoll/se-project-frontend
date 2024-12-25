@@ -68,7 +68,7 @@ export default function SelectNewAppointmentPage() {
         || scheduleFetchResult.status === "failed"
     ) {
         // @ts-ignore
-        const message = appointmentsFetchResult.error ?? medicsFetchResult.error ?? scheduleFetchResult.error;
+        const message = specialtiesFetchResult.error ?? medicsFetchResult.error ?? scheduleFetchResult.error;
         return <div>Error: {message}</div>;
     }
 
